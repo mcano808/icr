@@ -48,23 +48,26 @@ public class DataSourceSerializer
 	ds.setId("1234");
 	ds.getAttributeMappings().add(attr1);
 	ds.getAttributeMappings().add(attr2);
+			
+	ds.setDataSourceType(new DataSourceType("Discrete Position", "This datasource type has a single defined location."));
 	
-	JobProperty jobProp1 = new JobProperty("prop1", "prop1 description", true, DataType.DECIMAL, 0.0d);
+	Job job = new Job();
+	job.setName("REST to ElasticSearch");
+	job.setDescription("A job to ingest data from a restful URL into elasticsearch");
+	job.setDataSource(ds);
+	job.getJobProperties().add(new JobProperty("Schedule", "The schedule in which the job will run", true, DataType.STRING, "Group A", "0 0 *"));
+	job.getJobProperties().add(new JobProperty("URL", "the url from which to acquire data", true, DataType.INTEGER, "Group A", "https://my.stuff.com"));
 	
 	
-	JobProperty jobProp2 = new JobProperty("prop2", "Prop2 description", false, DataType.STRING, "abcdefgh");
-	
-	
-	ds.getJobProperties().add(jobProp1);
-	ds.getJobProperties().add(jobProp2);
 	
 	
 	ObjectMapper om = new ObjectMapper();
 	try
 	{
-	    om.writeValue(System.out, ds);
-	    DataSource ds2 = om.readValue(new File("/home/brautigama/workspace/craig-stuff/src/main/java/com/icr/example/DataSource.json"), DataSource.class);
-	    System.out.println(ds2);
+	    om.writeValue(System.out, DataType.DECIMAL);
+	    om.writeValue(new File("/tmp/Job.json"), job);
+	    Job job2 = om.readValue(new File("/tmp/Job.json"), Job.class);
+	    System.out.println(job2);
 
 	}
 	catch (Exception e)

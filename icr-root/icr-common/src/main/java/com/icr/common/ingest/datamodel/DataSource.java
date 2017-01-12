@@ -3,14 +3,16 @@ package com.icr.common.ingest.datamodel;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class DataSource
 {
-    private String id;
+    @Id private String id;
     private String name;
-    private List<JobProperty> jobProperties = new ArrayList<>();
+    private DataSourceType dataSourceType;
     private List<AttributeMapping> attributeMappings = new ArrayList<>();
     public String getId()
     {
@@ -19,6 +21,15 @@ public class DataSource
     public void setId(String id)
     {
         this.id = id;
+    }
+    
+    public DataSourceType getDataSourceType()
+    {
+        return dataSourceType;
+    }
+    public void setDataSourceType(DataSourceType dataSourceType)
+    {
+        this.dataSourceType = dataSourceType;
     }
     public String getName()
     {
@@ -36,14 +47,4 @@ public class DataSource
     {
         this.attributeMappings = attributeMappings;
     }
-    public List<JobProperty> getJobProperties()
-    {
-        return jobProperties;
-    }
-    public void setJobProperties(List<JobProperty> jobProperties)
-    {
-        this.jobProperties = jobProperties;
-    }
-   
-    
 }

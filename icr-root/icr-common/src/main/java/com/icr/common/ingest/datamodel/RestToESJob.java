@@ -13,8 +13,8 @@ public class RestToESJob
     public RestToESJob()
     {
 	jobProperties = new HashMap<>();
-	jobProperties.put(URL, new JobProperty(URL, "rest url description", true, DataType.STRING, null));
-	jobProperties.put(ES_INDEX, new JobProperty(ES_INDEX, "rest url description", true, DataType.STRING, null));
+//	jobProperties.put(URL, new JobProperty(URL, "rest url description", true, DataType.STRING, null));
+//	jobProperties.put(ES_INDEX, new JobProperty(ES_INDEX, "rest url description", true, DataType.STRING, null));
     }
     
     public JobProperty getUrl()

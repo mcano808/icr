@@ -11,16 +11,19 @@ public class JobProperty
     private String description;
     private boolean required;
     private DataType type;
+    private String group;
     private Object defaultValue;
     
+    
     @JsonCreator
-    public JobProperty(@JsonProperty("name") String name, @JsonProperty("description") String description, @JsonProperty("required") boolean required, @JsonProperty("type") DataType type, 
-	    @JsonProperty("defaultValue") Object defaultValue)
+    public JobProperty(@JsonProperty("name") String name, @JsonProperty("description") String description, @JsonProperty("required") boolean required, 
+	    @JsonProperty("type") DataType type, @JsonProperty("group") String group, @JsonProperty("defaultValue") Object defaultValue)
     {
 	this.name = name;
 	this.description = description;
 	this.required = required;
 	this.type = type;
+	this.group = group;
 	this.defaultValue = defaultValue;
     }
 
@@ -53,10 +56,17 @@ public class JobProperty
     {
         return type;
     }
-    
-    
-    
-   
-    
+
+
+    public String getGroup()
+    {
+        return group;
+    }
+
+
+    public void setGroup(String group)
+    {
+        this.group = group;
+    }   
     
 }
