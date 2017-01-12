@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Job
+public class IngestJob
 {
     @Id  
     private String id;
