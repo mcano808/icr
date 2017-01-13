@@ -4,6 +4,10 @@ import java.io.File;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Just for seeing how some of the json objects look.  This class is throw away
+ *
+ */
 public class DataSourceSerializer
 {
     public static void main(String [] args)
