@@ -5,14 +5,12 @@ import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class AttributeType
+public class User
 {
     @Id
     private String id;
     private String name;
-    private String description;
-    private DataType dataType;
-    
+    private String groupId;
     public String getName()
     {
         return name;
@@ -21,21 +19,16 @@ public class AttributeType
     {
         this.name = name;
     }
-    public String getDescription()
+    public String getGroupId()
     {
-        return description;
+        return groupId;
     }
-    public void setDescription(String description)
+    public void setGroupId(String groupId)
     {
-        this.description = description;
+        this.groupId = groupId;
     }
-    public DataType getDataType()
+    public String getId()
     {
-        return dataType;
-    }
-    public void setDataType(DataType dataType)
-    {
-        this.dataType = dataType;
-    }   
-  
+        return id;
+    }    
 }

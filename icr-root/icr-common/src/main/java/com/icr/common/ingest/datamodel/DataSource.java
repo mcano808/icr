@@ -10,10 +10,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class DataSource
 {
-    @Id private String id;
+    @Id 
+    private String id;
     private String name;
+    private String project;
     private DataSourceType dataSourceType;
     private List<AttributeMapping> attributeMappings = new ArrayList<>();
+    private String groupId;
+    
     public String getId()
     {
         return id;
@@ -39,6 +43,15 @@ public class DataSource
     {
         this.name = name;
     }
+    
+    public String getProject()
+    {
+        return project;
+    }
+    public void setProject(String project)
+    {
+        this.project = project;
+    }
     public List<AttributeMapping> getAttributeMappings()
     {
         return attributeMappings;
@@ -47,4 +60,13 @@ public class DataSource
     {
         this.attributeMappings = attributeMappings;
     }
+    public String getGroupId()
+    {
+        return groupId;
+    }
+    public void setGroupId(String groupId)
+    {
+        this.groupId = groupId;
+    }
+    
 }

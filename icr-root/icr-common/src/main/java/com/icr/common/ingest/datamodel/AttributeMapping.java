@@ -1,7 +1,9 @@
 package com.icr.common.ingest.datamodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -15,6 +17,7 @@ public class AttributeMapping
     private DataType dataType;
     private List<Formatter> formatters = new ArrayList<>();
     private List<Transformer> transformers = new ArrayList<>();
+    private Map<String, Object> properties = new HashMap<>();
     
     public String getOriginalAttribute()
     {
@@ -56,6 +59,10 @@ public class AttributeMapping
     public List<Transformer> getTransformers()
     {
         return transformers;
+    }
+    public Map<String, Object> getProperties()
+    {
+        return properties;
     }
         
 }

@@ -8,9 +8,9 @@ import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class IngestJob
-{    
-    @Id
+public class DataStoreJob
+{
+    @Id  
     private String id;
     private String name;
     private String description;
@@ -18,10 +18,6 @@ public class IngestJob
     private String dataSourceId;
     private boolean active;
     
-    public String getId()
-    {
-        return id;
-    }
     public String getName()
     {
         return name;
@@ -38,8 +34,7 @@ public class IngestJob
     public void setDescription(String description)
     {
         this.description = description;
-    }
-    
+    }   
     public String getDataSourceId()
     {
         return dataSourceId;
@@ -48,7 +43,10 @@ public class IngestJob
     {
         this.dataSourceId = dataSourceId;
     }
-   
+    public String getId()
+    {
+        return id;
+    }
     public List<JobProperty> getJobProperties()
     {
         return jobProperties;
@@ -60,6 +58,6 @@ public class IngestJob
     public void setActive(boolean active)
     {
         this.active = active;
-    }  
+    }    
     
 }

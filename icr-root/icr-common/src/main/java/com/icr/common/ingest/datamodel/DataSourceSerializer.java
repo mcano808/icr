@@ -51,10 +51,10 @@ public class DataSourceSerializer
 			
 	ds.setDataSourceType(new DataSourceType("Discrete Position", "This datasource type has a single defined location."));
 	
-	Job job = new Job();
+	IngestJob job = new IngestJob();
 	job.setName("REST to ElasticSearch");
 	job.setDescription("A job to ingest data from a restful URL into elasticsearch");
-	job.setDataSource(ds);
+	job.setDataSourceId("1234");
 	job.getJobProperties().add(new JobProperty("Schedule", "The schedule in which the job will run", true, DataType.STRING, "Group A", "0 0 *"));
 	job.getJobProperties().add(new JobProperty("URL", "the url from which to acquire data", true, DataType.INTEGER, "Group A", "https://my.stuff.com"));
 	
@@ -64,9 +64,9 @@ public class DataSourceSerializer
 	ObjectMapper om = new ObjectMapper();
 	try
 	{
-	    om.writeValue(System.out, DataType.DECIMAL);
+	    om.writeValue(System.out, job);
 	    om.writeValue(new File("/tmp/Job.json"), job);
-	    Job job2 = om.readValue(new File("/tmp/Job.json"), Job.class);
+	    IngestJob job2 = om.readValue(new File("/tmp/Job.json"), IngestJob.class);
 	    System.out.println(job2);
 
 	}
