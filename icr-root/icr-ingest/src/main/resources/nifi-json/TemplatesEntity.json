@@ -1,1 +1,391 @@
- 
+ {
+    "templates": [{
+	    "revision": {
+		    "clientId": "value",
+		    "version": 0,
+		    "lastModifier": "value"
+		},
+	    "id": "value",
+	    "uri": "value",
+	    "position": {
+		    "x": 0.0,
+		    "y": 0.0
+		},
+	    "permissions": {
+		    "canRead": true,
+		    "canWrite": true
+		},
+	    "bulletins": [{
+		    "id": 0,
+		    "groupId": "value",
+		    "sourceId": "value",
+		    "timestamp": "value",
+		    "nodeAddress": "value",
+		    "canRead": true,
+		    "bulletin": {
+			    "id": 0,
+			    "nodeAddress": "value",
+			    "category": "value",
+			    "groupId": "value",
+			    "sourceId": "value",
+			    "sourceName": "value",
+			    "level": "value",
+			    "message": "value",
+			    "timestamp": "value"
+			}
+		}],
+	    "template": {
+		    "uri": "value",
+		    "id": "value",
+		    "groupId": "value",
+		    "name": "value",
+		    "description": "value",
+		    "timestamp": "value",
+		    "encodingVersion": "value",
+		    "snippet": {
+			    "processGroups": {
+				    "empty": true
+				},
+			    "remoteProcessGroups": [{
+				    "id": "value",
+				    "parentGroupId": "value",
+				    "position": {
+					    "x": 0.0,
+					    "y": 0.0
+					},
+				    "targetUri": "value",
+				    "targetSecure": true,
+				    "name": "value",
+				    "comments": "value",
+				    "communicationsTimeout": "value",
+				    "yieldDuration": "value",
+				    "transportProtocol": "value",
+				    "proxyHost": "value",
+				    "proxyPort": 0,
+				    "proxyUser": "value",
+				    "proxyPassword": "value",
+				    "authorizationIssues": ["value"],
+				    "transmitting": true,
+				    "inputPortCount": 0,
+				    "outputPortCount": 0,
+				    "activeRemoteInputPortCount": 0,
+				    "inactiveRemoteInputPortCount": 0,
+				    "activeRemoteOutputPortCount": 0,
+				    "inactiveRemoteOutputPortCount": 0,
+				    "flowRefreshed": "value",
+				    "contents": {
+					    "inputPorts": [{
+						    "id": "value",
+						    "groupId": "value",
+						    "name": "value",
+						    "comments": "value",
+						    "concurrentlySchedulableTaskCount": 0,
+						    "transmitting": true,
+						    "useCompression": true,
+						    "exists": true,
+						    "targetRunning": true,
+						    "connected": true
+						}],
+					    "outputPorts": [{
+						    "id": "value",
+						    "groupId": "value",
+						    "name": "value",
+						    "comments": "value",
+						    "concurrentlySchedulableTaskCount": 0,
+						    "transmitting": true,
+						    "useCompression": true,
+						    "exists": true,
+						    "targetRunning": true,
+						    "connected": true
+						}]
+					}
+				}],
+			    "processors": [{
+				    "id": "value",
+				    "parentGroupId": "value",
+				    "position": {
+					    "x": 0.0,
+					    "y": 0.0
+					},
+				    "name": "value",
+				    "type": "value",
+				    "state": "value",
+				    "style": {
+				        "name": "value"
+				    },
+				    "relationships": [{
+					    "name": "value",
+					    "description": "value",
+					    "autoTerminate": true
+					}],
+				    "description": "value",
+				    "supportsParallelProcessing": true,
+				    "supportsEventDriven": true,
+				    "supportsBatching": true,
+				    "persistsState": true,
+				    "restricted": true,
+				    "inputRequirement": "value",
+				    "config": {
+					    "properties": {
+					        "name": "value"
+					    },
+					    "descriptors": {
+					        "name": {
+							    "name": "value",
+							    "displayName": "value",
+							    "description": "value",
+							    "defaultValue": "value",
+							    "allowableValues": [{
+								    "allowableValue": {
+									    "displayName": "value",
+									    "value": "value",
+									    "description": "value"
+									},
+								    "canRead": true
+								}],
+							    "required": true,
+							    "sensitive": true,
+							    "dynamic": true,
+							    "supportsEl": true,
+							    "identifiesControllerService": "value"
+							}
+					    },
+					    "schedulingPeriod": "value",
+					    "schedulingStrategy": "value",
+					    "executionNode": "value",
+					    "penaltyDuration": "value",
+					    "yieldDuration": "value",
+					    "bulletinLevel": "value",
+					    "runDurationMillis": 0,
+					    "concurrentlySchedulableTaskCount": 0,
+					    "autoTerminatedRelationships": ["value"],
+					    "comments": "value",
+					    "customUiUrl": "value",
+					    "lossTolerant": true,
+					    "annotationData": "value",
+					    "defaultConcurrentTasks": {
+					        "name": "value"
+					    },
+					    "defaultSchedulingPeriod": {
+					        "name": "value"
+					    }
+					},
+				    "validationErrors": ["value"]
+				}],
+			    "inputPorts": [{
+				    "id": "value",
+				    "parentGroupId": "value",
+				    "position": {
+					    "x": 0.0,
+					    "y": 0.0
+					},
+				    "name": "value",
+				    "comments": "value",
+				    "state": "value",
+				    "type": "value",
+				    "transmitting": true,
+				    "concurrentlySchedulableTaskCount": 0,
+				    "userAccessControl": ["value"],
+				    "groupAccessControl": ["value"],
+				    "validationErrors": ["value"]
+				}],
+			    "outputPorts": [{
+				    "id": "value",
+				    "parentGroupId": "value",
+				    "position": {
+					    "x": 0.0,
+					    "y": 0.0
+					},
+				    "name": "value",
+				    "comments": "value",
+				    "state": "value",
+				    "type": "value",
+				    "transmitting": true,
+				    "concurrentlySchedulableTaskCount": 0,
+				    "userAccessControl": ["value"],
+				    "groupAccessControl": ["value"],
+				    "validationErrors": ["value"]
+				}],
+			    "connections": [{
+				    "id": "value",
+				    "parentGroupId": "value",
+				    "position": {
+					    "x": 0.0,
+					    "y": 0.0
+					},
+				    "source": {
+					    "id": "value",
+					    "type": "value",
+					    "groupId": "value",
+					    "name": "value",
+					    "running": true,
+					    "transmitting": true,
+					    "exists": true,
+					    "comments": "value"
+					},
+				    "destination": {
+					    "id": "value",
+					    "type": "value",
+					    "groupId": "value",
+					    "name": "value",
+					    "running": true,
+					    "transmitting": true,
+					    "exists": true,
+					    "comments": "value"
+					},
+				    "name": "value",
+				    "labelIndex": 0,
+				    "getzIndex": 0,
+				    "selectedRelationships": ["value"],
+				    "availableRelationships": ["value"],
+				    "backPressureObjectThreshold": 0,
+				    "backPressureDataSizeThreshold": "value",
+				    "flowFileExpiration": "value",
+				    "prioritizers": ["value"],
+				    "bends": [{
+					    "x": 0.0,
+					    "y": 0.0
+					}]
+				}],
+			    "labels": [{
+				    "id": "value",
+				    "parentGroupId": "value",
+				    "position": {
+					    "x": 0.0,
+					    "y": 0.0
+					},
+				    "label": "value",
+				    "width": 0.0,
+				    "height": 0.0,
+				    "style": {
+				        "name": "value"
+				    }
+				}],
+			    "funnels": [{
+				    "id": "value",
+				    "parentGroupId": "value",
+				    "position": {
+					    "x": 0.0,
+					    "y": 0.0
+					}
+				}],
+			    "controllerServices": [{
+				    "id": "value",
+				    "parentGroupId": "value",
+				    "position": {
+					    "x": 0.0,
+					    "y": 0.0
+					},
+				    "name": "value",
+				    "type": "value",
+				    "comments": "value",
+				    "state": "value",
+				    "persistsState": true,
+				    "restricted": true,
+				    "properties": {
+				        "name": "value"
+				    },
+				    "descriptors": {
+				        "name": {
+						    "name": "value",
+						    "displayName": "value",
+						    "description": "value",
+						    "defaultValue": "value",
+						    "allowableValues": [{
+							    "allowableValue": {
+								    "displayName": "value",
+								    "value": "value",
+								    "description": "value"
+								},
+							    "canRead": true
+							}],
+						    "required": true,
+						    "sensitive": true,
+						    "dynamic": true,
+						    "supportsEl": true,
+						    "identifiesControllerService": "value"
+						}
+				    },
+				    "customUiUrl": "value",
+				    "annotationData": "value",
+				    "referencingComponents": [{
+					    "revision": {
+						    "clientId": "value",
+						    "version": 0,
+						    "lastModifier": "value"
+						},
+					    "id": "value",
+					    "uri": "value",
+					    "position": {
+						    "x": 0.0,
+						    "y": 0.0
+						},
+					    "permissions": {
+						    "canRead": true,
+						    "canWrite": true
+						},
+					    "bulletins": [{
+						    "id": 0,
+						    "groupId": "value",
+						    "sourceId": "value",
+						    "timestamp": "value",
+						    "nodeAddress": "value",
+						    "canRead": true,
+						    "bulletin": {
+							    "id": 0,
+							    "nodeAddress": "value",
+							    "category": "value",
+							    "groupId": "value",
+							    "sourceId": "value",
+							    "sourceName": "value",
+							    "level": "value",
+							    "message": "value",
+							    "timestamp": "value"
+							}
+						}],
+					    "component": {
+						    "groupId": "value",
+						    "id": "value",
+						    "name": "value",
+						    "type": "value",
+						    "state": "value",
+						    "properties": {
+						        "name": "value"
+						    },
+						    "descriptors": {
+						        "name": {
+								    "name": "value",
+								    "displayName": "value",
+								    "description": "value",
+								    "defaultValue": "value",
+								    "allowableValues": [{
+									    "allowableValue": {
+										    "displayName": "value",
+										    "value": "value",
+										    "description": "value"
+										},
+									    "canRead": true
+									}],
+								    "required": true,
+								    "sensitive": true,
+								    "dynamic": true,
+								    "supportsEl": true,
+								    "identifiesControllerService": "value"
+								}
+						    },
+						    "validationErrors": ["value"],
+						    "referenceType": "value",
+						    "activeThreadCount": 0,
+						    "referenceCycle": true,
+						    "referencingComponents": {
+							    "empty": true
+							}
+						}
+					}],
+				    "validationErrors": ["value"]
+				}]
+			}
+		}
+	}],
+    "generated": "value"
+}

@@ -16,10 +16,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "outputPorts",
     "connections",
     "labels",
-    "funnels",
-    "controllerServices"
+    "funnels"
 })
-public class Contents {
+public class Flow {
 
     @JsonProperty("processGroups")
     private List<ProcessGroup> processGroups = new ArrayList<ProcessGroup>();
@@ -37,8 +36,6 @@ public class Contents {
     private List<Label> labels = new ArrayList<Label>();
     @JsonProperty("funnels")
     private List<Funnel> funnels = new ArrayList<Funnel>();
-    @JsonProperty("controllerServices")
-    private List<ControllerService> controllerServices = new ArrayList<ControllerService>();
 
     @JsonProperty("processGroups")
     public List<ProcessGroup> getProcessGroups() {
@@ -118,16 +115,6 @@ public class Contents {
     @JsonProperty("funnels")
     public void setFunnels(List<Funnel> funnels) {
         this.funnels = funnels;
-    }
-
-    @JsonProperty("controllerServices")
-    public List<ControllerService> getControllerServices() {
-        return controllerServices;
-    }
-
-    @JsonProperty("controllerServices")
-    public void setControllerServices(List<ControllerService> controllerServices) {
-        this.controllerServices = controllerServices;
     }
 
 }

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "funnels",
     "controllerServices"
 })
-public class Contents {
+public class Snippet {
 
     @JsonProperty("processGroups")
     private List<ProcessGroup> processGroups = new ArrayList<ProcessGroup>();
