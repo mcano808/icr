@@ -21,7 +21,7 @@ import com.icr.common.ingest.datamodel.JobProperty;
 
 @RepositoryRestController
 @RequestMapping(value = "/discover") 
-public class DiscoveryController
+public class DiscoverService
 {
   
     @RequestMapping(method = RequestMethod.GET, value = "ingestJobs") 
@@ -45,7 +45,7 @@ public class DiscoveryController
 	job.getJobProperties().add(new JobProperty("Schedule","Schedule Description", true, DataType.STRING, "Group A", null));
 	jobs.add(job);
 	Resources<IngestJob> resources = new Resources<>(jobs);
-	resources.add(linkTo(methodOn(DiscoveryController.class).discoverIngestJobs()).withSelfRel());
+	resources.add(linkTo(methodOn(DiscoverService.class).discoverIngestJobs()).withSelfRel());
 	return ResponseEntity.ok(resources);	
     }  
     
@@ -64,7 +64,7 @@ public class DiscoveryController
 	job.getJobProperties().add(new JobProperty("Port","Port description", true, DataType.INTEGER, "Group A", 6000));
 	jobs.add(job);
 	Resources<DataStoreJob> resources = new Resources<>(jobs);
-	resources.add(linkTo(methodOn(DiscoveryController.class).discoverDataStoreJobs()).withSelfRel());
+	resources.add(linkTo(methodOn(DiscoverService.class).discoverDataStoreJobs()).withSelfRel());
 	return ResponseEntity.ok(resources);
     }
     
