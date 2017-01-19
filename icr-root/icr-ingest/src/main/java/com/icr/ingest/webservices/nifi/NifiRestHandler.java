@@ -16,18 +16,26 @@
  */
 package com.icr.ingest.webservices.nifi;
 
+import java.util.Map;
+
+import javax.ws.rs.core.MediaType;
+
+import org.apache.nifi.framework.security.util.SslContextFactory;
+import org.apache.nifi.util.NiFiProperties;
+import org.apache.nifi.web.security.ProxiedEntitiesUtils;
+import org.apache.nifi.web.util.WebUtils;
+import org.springframework.stereotype.Component;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
-import org.apache.nifi.web.security.ProxiedEntitiesUtils;
-
-import javax.ws.rs.core.MediaType;
-import java.util.Map;
 
 /**
+ * Nifi rest based handler to communicate with nifi
  *
  */
+@Component
 public class NifiRestHandler
 {
 
@@ -45,6 +53,16 @@ public class NifiRestHandler
         {
             this.proxyDn = null;
         }
+    }
+
+    public NifiRestHandler(NiFiProperties properties, String proxyDn)
+    {
+        this(WebUtils.createClient(null, SslContextFactory.createSslContext(properties)), proxyDn);
+    }
+
+    public NifiRestHandler()
+    {
+        this(WebUtils.createClient(null, null), null);
     }
 
     /**
@@ -75,9 +93,9 @@ public class NifiRestHandler
      * @throws Exception
      *             ex
      */
-    public ClientResponse testGet(String url) throws Exception
+    public <T> T get(String url, Class<T> responseClass) throws Exception
     {
-        return testGet(url, null);
+        return get(url, null, responseClass);
     }
 
     /**
@@ -89,9 +107,9 @@ public class NifiRestHandler
      *            params
      * @return response
      */
-    public ClientResponse testGet(String url, Map<String, String> queryParams)
+    public <T> T get(String url, Map<String, String> queryParams, Class<T> responseClass)
     {
-        return testGetWithHeaders(url, queryParams, null);
+        return getWithHeaders(url, queryParams, null, responseClass);
     }
 
     /**
@@ -105,7 +123,7 @@ public class NifiRestHandler
      *            http headers
      * @return response
      */
-    public ClientResponse testGetWithHeaders(String url, Map<String, String> queryParams, Map<String, String> headers)
+    public ClientResponse getWithHeaders(String url, Map<String, String> queryParams, Map<String, String> headers)
     {
         // get the resource
         WebResource resource = client.resource(url);
@@ -134,6 +152,13 @@ public class NifiRestHandler
         // perform the query
         return builder.get(ClientResponse.class);
     }
+    
+    public <T> T getWithHeaders(String url, Map<String, String> queryParams, Map<String, String> headers,
+            Class<T> responseClass)
+    {        
+        // perform the query
+        return getWithHeaders(url, queryParams, headers).getEntity(responseClass);
+    }
 
     /**
      * Performs a POST using the specified url.
@@ -144,9 +169,9 @@ public class NifiRestHandler
      * @throws Exception
      *             ex
      */
-    public ClientResponse testPost(String url) throws Exception
+    public <T> T post(String url, Class<T> responseClass) throws Exception
     {
-        return testPost(url, (Object) null);
+        return post(url, (Object) null, responseClass);
     }
 
     /**
@@ -160,9 +185,9 @@ public class NifiRestHandler
      * @throws Exception
      *             ex
      */
-    public ClientResponse testPost(String url, Object entity) throws Exception
+    public <T> T post(String url, Object entity, Class<T> responseClass) throws Exception
     {
-        return testPostWithHeaders(url, entity, null);
+        return postWithHeaders(url, entity, null, responseClass);
     }
 
     /**
@@ -178,7 +203,8 @@ public class NifiRestHandler
      * @throws Exception
      *             ex
      */
-    public ClientResponse testPostWithHeaders(String url, Object entity, Map<String, String> headers) throws Exception
+    public ClientResponse postWithHeaders(String url, Object entity, Map<String, String> headers)
+            throws Exception
     {
         // get the resource
         WebResource.Builder resourceBuilder = addProxiedEntities(client.resource(url).type(MediaType.APPLICATION_JSON));
@@ -201,6 +227,12 @@ public class NifiRestHandler
         // perform the request
         return resourceBuilder.post(ClientResponse.class);
     }
+    
+    public <T> T postWithHeaders(String url, Object entity, Map<String, String> headers, Class<T> responseClass)
+            throws Exception
+    {
+        return postWithHeaders(url, entity, headers).getEntity(responseClass);
+    }
 
     /**
      * Performs a POST using the specified url and entity body.
@@ -213,9 +245,9 @@ public class NifiRestHandler
      * @throws Exception
      *             ex
      */
-    public ClientResponse testPostMultiPart(String url, Object entity) throws Exception
+    public <T> T postMultiPart(String url, Object entity, Class<T> responseClass) throws Exception
     {
-        return testPostMultiPartWithHeaders(url, entity, null);
+        return postMultiPartWithHeaders(url, entity, null, responseClass);
     }
 
     /**
@@ -231,7 +263,7 @@ public class NifiRestHandler
      * @throws Exception
      *             ex
      */
-    public ClientResponse testPostMultiPartWithHeaders(String url, Object entity, Map<String, String> headers)
+    public ClientResponse postMultiPartWithHeaders(String url, Object entity, Map<String, String> headers)
             throws Exception
     {
         // get the resource
@@ -257,6 +289,12 @@ public class NifiRestHandler
         return resourceBuilder.post(ClientResponse.class);
     }
 
+    public <T> T postMultiPartWithHeaders(String url, Object entity, Map<String, String> headers,
+            Class<T> responseClass) throws Exception
+    {
+        return postMultiPartWithHeaders(url, entity, headers).getEntity(responseClass);
+    }
+
     /**
      * Performs a POST using the specified url and form data.
      *
@@ -268,9 +306,9 @@ public class NifiRestHandler
      * @throws java.lang.Exception
      *             ex
      */
-    public ClientResponse testPost(String url, Map<String, String> formData) throws Exception
+    public <T> T post(String url, Map<String, String> formData, Class<T> responseClass) throws Exception
     {
-        return testPostWithHeaders(url, formData, null);
+        return postWithHeaders(url, formData, null, responseClass);
     }
 
     /**
@@ -286,7 +324,7 @@ public class NifiRestHandler
      * @throws java.lang.Exception
      *             ex
      */
-    public ClientResponse testPostWithHeaders(String url, Map<String, String> formData, Map<String, String> headers)
+    public ClientResponse postWithHeaders(String url, Map<String, String> formData, Map<String, String> headers)
             throws Exception
     {
         // convert the form data
@@ -319,6 +357,12 @@ public class NifiRestHandler
         return resourceBuilder.post(ClientResponse.class);
     }
 
+    public <T> T postWithHeaders(String url, Map<String, String> formData, Map<String, String> headers,
+            Class<T> responseClass) throws Exception
+    {
+        return postWithHeaders(url, formData, headers).getEntity(responseClass);
+    }
+
     /**
      * Performs a PUT using the specified url and entity body.
      *
@@ -330,9 +374,9 @@ public class NifiRestHandler
      * @throws java.lang.Exception
      *             ex
      */
-    public ClientResponse testPut(String url, Object entity) throws Exception
+    public <T> T put(String url, Object entity, Class<T> responseClass) throws Exception
     {
-        return testPutWithHeaders(url, entity, null);
+        return putWithHeaders(url, entity, null, responseClass);
     }
 
     /**
@@ -348,7 +392,7 @@ public class NifiRestHandler
      * @throws java.lang.Exception
      *             ex
      */
-    public ClientResponse testPutWithHeaders(String url, Object entity, Map<String, String> headers) throws Exception
+    public ClientResponse putWithHeaders(String url, Object entity, Map<String, String> headers) throws Exception
     {
         // get the resource
         WebResource.Builder resourceBuilder = addProxiedEntities(client.resource(url).type(MediaType.APPLICATION_JSON));
@@ -372,6 +416,12 @@ public class NifiRestHandler
         return resourceBuilder.put(ClientResponse.class);
     }
 
+    public <T> T putWithHeaders(String url, Object entity, Map<String, String> headers, Class<T> responseClass)
+            throws Exception
+    {
+        return putWithHeaders(url, entity, headers).getEntity(responseClass);
+    }
+
     /**
      * Performs a PUT using the specified url and form data.
      *
@@ -383,9 +433,9 @@ public class NifiRestHandler
      * @throws java.lang.Exception
      *             ex
      */
-    public ClientResponse testPut(String url, Map<String, String> formData) throws Exception
+    public <T> T put(String url, Map<String, String> formData, Class<T> responseClass) throws Exception
     {
-        return testPutWithHeaders(url, formData, null);
+        return putWithHeaders(url, formData, null, responseClass);
     }
 
     /**
@@ -401,7 +451,7 @@ public class NifiRestHandler
      * @throws java.lang.Exception
      *             ex
      */
-    public ClientResponse testPutWithHeaders(String url, Map<String, String> formData, Map<String, String> headers)
+    public ClientResponse putWithHeaders(String url, Map<String, String> formData, Map<String, String> headers)
             throws Exception
     {
         // convert the form data
@@ -434,6 +484,12 @@ public class NifiRestHandler
         return resourceBuilder.put(ClientResponse.class);
     }
 
+    public <T> T putWithHeaders(String url, Map<String, String> formData, Map<String, String> headers,
+            Class<T> responseClass) throws Exception
+    {
+        return putWithHeaders(url, formData, headers).getEntity(responseClass);
+    }
+
     /**
      * Performs a DELETE using the specified url.
      *
@@ -443,9 +499,9 @@ public class NifiRestHandler
      * @throws java.lang.Exception
      *             ex
      */
-    public ClientResponse testDelete(String url) throws Exception
+    public <T> T delete(String url, Class<T> responseClass) throws Exception
     {
-        return testDelete(url, null);
+        return delete(url, null, responseClass);
     }
 
     /**
@@ -459,7 +515,12 @@ public class NifiRestHandler
      * @throws java.lang.Exception
      *             ex
      */
-    public ClientResponse testDeleteWithHeaders(String url, Map<String, String> headers) throws Exception
+    public <T> T deleteWithHeaders(String url, Map<String, String> headers, Class<T> responseClass) throws Exception
+    {
+        return deleteWithHeaders(url, headers).getEntity(responseClass);
+    }
+
+    public ClientResponse deleteWithHeaders(String url, Map<String, String> headers) throws Exception
     {
         // get the resource
         WebResource.Builder resourceBuilder = addProxiedEntities(client.resource(url).getRequestBuilder());
@@ -488,7 +549,7 @@ public class NifiRestHandler
      * @throws java.lang.Exception
      *             ex
      */
-    public ClientResponse testDelete(String url, Map<String, String> queryParams) throws Exception
+    public ClientResponse delete(String url, Map<String, String> queryParams) throws Exception
     {
         // get the resource
         WebResource resource = client.resource(url);
@@ -506,6 +567,11 @@ public class NifiRestHandler
         return addProxiedEntities(resource.type(MediaType.APPLICATION_FORM_URLENCODED)).delete(ClientResponse.class);
     }
 
+    public <T> T delete(String url, Map<String, String> queryParams, Class<T> responseClass) throws Exception
+    {
+        return delete(url, queryParams).getEntity(responseClass);
+    }
+
     /**
      * Attempts to create a token with the specified username and password.
      *
@@ -519,7 +585,7 @@ public class NifiRestHandler
      * @throws Exception
      *             ex
      */
-    public ClientResponse testCreateToken(String url, String username, String password) throws Exception
+    public ClientResponse createToken(String url, String username, String password) throws Exception
     {
         // convert the form data
         MultivaluedMapImpl entity = new MultivaluedMapImpl();

@@ -1,6 +1,5 @@
 package com.icr.ingest.webservices.nifi;
 
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,27 +23,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @org.springframework.stereotype.Component
 public class NifiCsvJobBuilder
-{
-    @Autowired
-    private RestTemplate restTemplate;
+{ 
 
     @Autowired
-    private ObjectMapper objectMapper;
-    //
-    // @Bean
-    // public RestTemplate restTemplate(RestTemplateBuilder builder)
-    // {
-    // return builder.build();
-    // }
+    private NifiRestHandler nifiRestHandler;
 
-    //
-    // @Bean
-    // public ObjectMapper createObjectMapper()
-    // {
-    // ObjectMapper objectMapper = new ObjectMapper();
-    // objectMapper.setDateFormat(new SimpleDateFormat("HH:mm:ss z"));
-    // return objectMapper;
-    // }
 
     @Bean
     public RestTemplate createRestTemplate(RestTemplateBuilder builder, ObjectMapper objectMapper)
@@ -57,27 +40,16 @@ public class NifiCsvJobBuilder
 
         jsonMessageConverter.setObjectMapper(objectMapper);
         messageConverters.add(jsonMessageConverter);
-        restTemplate.setMessageConverters(messageConverters); // This line was
-                                                              // missing, but
-                                                              // needs to be
-                                                              // here. See
-                                                              // answer.
+        restTemplate.setMessageConverters(messageConverters);
         return restTemplate;
     }
 
-    // public void initRestTemplate(RestTemplateBuilder builder)
-    // {
-    // restTemplate = builder.build();
-    // }
-
     public void buildJob() throws Exception
-    {
-        // ObjectMapper mapper = new ObjectMapper();
-        // mapper.setDateFormat(new SimpleDateFormat("HH:mm:ss z"));
-        // RestTemplate restTemplate = restTemplateBuilder.build();
+    {        
         // First get the root process group
-        ProcessGroupEntity rootGroup = restTemplate.getForObject("http://localhost:8080/nifi-api/process-groups/root",
+        ProcessGroupEntity rootGroup = nifiRestHandler.get("http://localhost:8080/nifi-api/process-groups/root",
                 ProcessGroupEntity.class);
+
         RevisionDTO revision = new RevisionDTO();
         revision.setClientId(UUID.randomUUID().toString());
         revision.setVersion(0L);
@@ -85,16 +57,16 @@ public class NifiCsvJobBuilder
         component.setName("TestCSV");
         ProcessGroupEntity newProcessGroup = new ProcessGroupEntity();
         newProcessGroup.setComponent(component);
-        newProcessGroup.setRevision(revision);
-        // Create the process group
-        newProcessGroup = restTemplate
-                .postForObject(new URI(String.format("http://localhost:8080/nifi-api/process-groups/%s/process-groups",
-                        rootGroup.getComponent().getId())), newProcessGroup, ProcessGroupEntity.class);
+        newProcessGroup.setRevision(revision); 
+        
+        // Create the process group        
+        newProcessGroup = nifiRestHandler.post(String.format("http://localhost:8080/nifi-api/process-groups/%s/process-groups",
+                rootGroup.getComponent().getId()), newProcessGroup, ProcessGroupEntity.class);        
 
         // Instantiate a template in the new process group
 
         // First get the instance
-        TemplatesEntity templateEntity = restTemplate.getForObject("http://localhost:8080/nifi-api/flow/templates",
+        TemplatesEntity templateEntity = nifiRestHandler.get("http://localhost:8080/nifi-api/flow/templates",
                 TemplatesEntity.class);
 
         // TODO look this up via the data model
@@ -106,19 +78,16 @@ public class NifiCsvJobBuilder
                 csvTemplate = template;
             }
         }
-        // InstantiateTemplateRequestEntity newTemplateRequest = new
-        // InstantiateTemplateRequestEntity();
-        // newTemplateRequest.setTemplateId(csvTemplate.getId());
-        // newTemplateRequest.setOriginX(0d);
-        // newTemplateRequest.setOriginY(0d);
-        //
-        // FlowEntity flow =
-        // restTemplate.postForObject(String.format("http://localhost:8080/nifi-api/process-groups/%s/template-instance",
-        // newProcessGroup.getId()), newTemplateRequest, FlowEntity.class);
-        //
-        // ObjectMapper mapper = new ObjectMapper();
-        // mapper.writeValue(System.out, newProcessGroup);
-        // restTemplate.put("http://localhost:8080/nifi-api/process-groups/" +
-        // pe.getComponent().getId(), pe);
+        InstantiateTemplateRequestEntity newTemplateRequest = new InstantiateTemplateRequestEntity();
+        newTemplateRequest.setTemplateId(csvTemplate.getId());
+        newTemplateRequest.setOriginX(0d);
+        newTemplateRequest.setOriginY(0d);
+
+        FlowEntity flow = nifiRestHandler.post(String
+                .format("http://localhost:8080/nifi-api/process-groups/%s/template-instance", newProcessGroup.getId()),
+                newTemplateRequest, FlowEntity.class);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(System.out, newProcessGroup);
     }
 }
