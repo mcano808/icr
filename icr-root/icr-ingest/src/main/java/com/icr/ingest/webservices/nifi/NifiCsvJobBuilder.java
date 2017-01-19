@@ -22,43 +22,46 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @org.springframework.stereotype.Component
 public class NifiCsvJobBuilder
 {
-     @Autowired
-     private RestTemplate restTemplate;
-     
-     @Autowired
-     private ObjectMapper objectMapper;
-//
-//    @Bean
-//    public RestTemplate restTemplate(RestTemplateBuilder builder)
-//    {
-//        return builder.build();
-//    }
-    
-//	
-//	@Bean 
-//	public ObjectMapper createObjectMapper()
-//	{
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		objectMapper.setDateFormat(new SimpleDateFormat("HH:mm:ss z"));
-//		return objectMapper;
-//	}
-	
-	@Bean
-    public RestTemplate createRestTemplate(RestTemplateBuilder builder, ObjectMapper objectMapper) 
-	{
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+    //
+    // @Bean
+    // public RestTemplate restTemplate(RestTemplateBuilder builder)
+    // {
+    // return builder.build();
+    // }
+
+    //
+    // @Bean
+    // public ObjectMapper createObjectMapper()
+    // {
+    // ObjectMapper objectMapper = new ObjectMapper();
+    // objectMapper.setDateFormat(new SimpleDateFormat("HH:mm:ss z"));
+    // return objectMapper;
+    // }
+
+    @Bean
+    public RestTemplate createRestTemplate(RestTemplateBuilder builder, ObjectMapper objectMapper)
+    {
         RestTemplate restTemplate = builder.build();
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-        
+
         MappingJackson2HttpMessageConverter jsonMessageConverter = new MappingJackson2HttpMessageConverter();
-		objectMapper.setDateFormat(new SimpleDateFormat("HH:mm:ss z"));
+        objectMapper.setDateFormat(new SimpleDateFormat("HH:mm:ss z"));
 
         jsonMessageConverter.setObjectMapper(objectMapper);
         messageConverters.add(jsonMessageConverter);
-        restTemplate.setMessageConverters(messageConverters); // This line was missing, but needs to be here. See answer.
+        restTemplate.setMessageConverters(messageConverters); // This line was
+                                                              // missing, but
+                                                              // needs to be
+                                                              // here. See
+                                                              // answer.
         return restTemplate;
     }
 
@@ -69,8 +72,8 @@ public class NifiCsvJobBuilder
 
     public void buildJob() throws Exception
     {
-        //ObjectMapper mapper = new ObjectMapper();
-        //mapper.setDateFormat(new SimpleDateFormat("HH:mm:ss z"));
+        // ObjectMapper mapper = new ObjectMapper();
+        // mapper.setDateFormat(new SimpleDateFormat("HH:mm:ss z"));
         // RestTemplate restTemplate = restTemplateBuilder.build();
         // First get the root process group
         ProcessGroupEntity rootGroup = restTemplate.getForObject("http://localhost:8080/nifi-api/process-groups/root",
@@ -91,27 +94,30 @@ public class NifiCsvJobBuilder
         // Instantiate a template in the new process group
 
         // First get the instance
-        TemplatesEntity templateEntity = restTemplate.getForObject("http://localhost:8080/nifi-api/flow/templates", TemplatesEntity.class);
-        
-        //TODO look this up via the data model
+        TemplatesEntity templateEntity = restTemplate.getForObject("http://localhost:8080/nifi-api/flow/templates",
+                TemplatesEntity.class);
+
+        // TODO look this up via the data model
         TemplateEntity csvTemplate = null;
-        for(TemplateEntity template: templateEntity.getTemplates())
+        for (TemplateEntity template : templateEntity.getTemplates())
         {
             if (template.getTemplate().getName().equals("TestCsvTemplate"))
             {
                 csvTemplate = template;
             }
         }
-//        InstantiateTemplateRequestEntity newTemplateRequest = new InstantiateTemplateRequestEntity();
-//        newTemplateRequest.setTemplateId(csvTemplate.getId());
-//        newTemplateRequest.setOriginX(0d);
-//        newTemplateRequest.setOriginY(0d);
-//        
-//        FlowEntity flow = restTemplate.postForObject(String.format("http://localhost:8080/nifi-api/process-groups/%s/template-instance",
-//                newProcessGroup.getId()), newTemplateRequest, FlowEntity.class);
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.writeValue(System.out, newProcessGroup);
+        // InstantiateTemplateRequestEntity newTemplateRequest = new
+        // InstantiateTemplateRequestEntity();
+        // newTemplateRequest.setTemplateId(csvTemplate.getId());
+        // newTemplateRequest.setOriginX(0d);
+        // newTemplateRequest.setOriginY(0d);
+        //
+        // FlowEntity flow =
+        // restTemplate.postForObject(String.format("http://localhost:8080/nifi-api/process-groups/%s/template-instance",
+        // newProcessGroup.getId()), newTemplateRequest, FlowEntity.class);
+        //
+        // ObjectMapper mapper = new ObjectMapper();
+        // mapper.writeValue(System.out, newProcessGroup);
         // restTemplate.put("http://localhost:8080/nifi-api/process-groups/" +
         // pe.getComponent().getId(), pe);
     }

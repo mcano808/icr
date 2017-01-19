@@ -9,6 +9,7 @@ import com.icr.common.ingest.datamodel.IngestJob;
 @RepositoryRestResource(collectionResourceRel = "ingestJobs", path = "ingestJobs")
 public interface IngestJobRepository extends MongoRepository<IngestJob, String>
 {
-    IngestJob findById(@Param("id") String id);   
-    IngestJob findByName(@Param("name")String name);
+    IngestJob findById(@Param("id") String id);
+
+    IngestJob findByName(@Param("name") String name);
 }

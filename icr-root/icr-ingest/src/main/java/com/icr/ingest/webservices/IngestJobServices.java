@@ -17,19 +17,19 @@ public class IngestJobServices
 {
     @Autowired
     private NifiCsvJobBuilder csvBuilder;
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "buildIngestJob")
     public @ResponseBody ResponseEntity<Resources<IngestJob>> buildIngestJob()
     {
-	try
-	{
-	    csvBuilder.buildJob();
-	}
-	catch (Exception e)	
-	{
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
-	return null;
+        try
+        {
+            csvBuilder.buildJob();
+        }
+        catch (Exception e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -4,12 +4,12 @@ import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DataTypeWrapper
 {
     @Id
     private String id;
-    
+
     private DataType dataType;
 
     public DataType getDataType()
@@ -26,6 +26,5 @@ public class DataTypeWrapper
     {
         return id;
     }
-    
 
 }

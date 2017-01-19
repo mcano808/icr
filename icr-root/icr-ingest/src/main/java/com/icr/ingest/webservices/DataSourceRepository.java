@@ -8,10 +8,10 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.icr.common.ingest.datamodel.DataSource;
 
+@RepositoryRestResource(collectionResourceRel = "datasource", path = "datasource")
+public interface DataSourceRepository extends MongoRepository<DataSource, String>
+{
 
-@RepositoryRestResource(collectionResourceRel = "datasource", path = "datasource" )
-public interface DataSourceRepository extends MongoRepository<DataSource, String> {
-
-	List<DataSource> findByName(@Param("name") String name);
+    List<DataSource> findByName(@Param("name") String name);
 
 }
