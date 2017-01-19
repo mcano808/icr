@@ -21,11 +21,5 @@ public class Factory
 	return new Transformer("RegexTransformer", properties);
     }
     
-    public static Formatter getDateTransformer()
-    {
-	Map<String, Object>properties = new HashMap<>();
-	properties.put("formatString", "yyyy-MM-dd HH:mm:SS");
-	return new Formatter("DateTransformer", properties);
-    }
 
 }

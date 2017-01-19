@@ -15,7 +15,7 @@ public class AttributeMapping
     private String newAttribute;
     private AttributeType attributeType;
     private DataType dataType;
-    private List<Formatter> formatters = new ArrayList<>();
+    private List<String> formatters = new ArrayList<>();
     private List<Transformer> transformers = new ArrayList<>();
     private Map<String, Object> properties = new HashMap<>();
     
@@ -52,7 +52,7 @@ public class AttributeMapping
         this.dataType = dataType;
     }
     
-    public List<Formatter> getFormatters()
+    public List<String> getFormatters()
     {
         return formatters;
     }

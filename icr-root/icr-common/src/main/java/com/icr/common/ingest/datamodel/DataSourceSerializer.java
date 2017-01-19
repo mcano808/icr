@@ -34,7 +34,7 @@ public class DataSourceSerializer
 	attrType3.setDataType(DataType.STRING);
 	attr1.setAttributeType(attrType1);
 	attr1.setDataType(DataType.DECIMAL);
-	attr1.getFormatters().add(Factory.getDateTransformer());	
+	attr1.getFormatters().add("YYYY-MM-dd HH:mm:SS");	
 	attr1.setNewAttribute("NewVal1");
 	attr1.setOriginalAttribute("OrigVal1");
 	
@@ -44,7 +44,7 @@ public class DataSourceSerializer
 	
 	attr2.setAttributeType(attrType2);
 	attr2.setDataType(DataType.DECIMAL);
-	attr2.getFormatters().add(Factory.getDateTransformer());	
+	attr2.getFormatters().add("YYYY-MM-dd HH:mm:SS");	
 	attr2.setNewAttribute("NewVal2");
 	attr2.setOriginalAttribute("OrigVal2");
 	
