@@ -13,12 +13,26 @@ public class AttributeMapping
     private String originalAttribute;
     private String newAttribute;
     private AttributeType attributeType;
-    private DataType dataType;
     private List<String> formatters = new ArrayList<>();
     private List<Transformer> transformers = new ArrayList<>();
     private Map<String, Object> properties = new HashMap<>();
 
-    public String getOriginalAttribute()
+    public AttributeMapping() {
+    	// Intentionally left blank
+    }
+    
+    public AttributeMapping(String originalAttribute, String newAttribute, AttributeType attributeType,
+			List<String> formatters, List<Transformer> transformers,
+			Map<String, Object> properties) {
+		this.originalAttribute = originalAttribute;
+		this.newAttribute = newAttribute;
+		this.attributeType = attributeType;
+		this.formatters = formatters;
+		this.transformers = transformers;
+		this.properties = properties;
+	}
+
+	public String getOriginalAttribute()
     {
         return originalAttribute;
     }
@@ -46,16 +60,6 @@ public class AttributeMapping
     public void setAttributeType(AttributeType attributeType)
     {
         this.attributeType = attributeType;
-    }
-
-    public DataType getDataType()
-    {
-        return dataType;
-    }
-
-    public void setDataType(DataType dataType)
-    {
-        this.dataType = dataType;
     }
 
     public List<String> getFormatters()

@@ -13,7 +13,18 @@ public class AttributeType
     private String description;
     private DataType dataType;
 
-    public String getName()
+    public AttributeType() {
+		// Intentionally left blank
+	}
+
+	public AttributeType(String name, String description, DataType dataType) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.dataType = dataType;
+	}
+
+	public String getName()
     {
         return name;
     }
