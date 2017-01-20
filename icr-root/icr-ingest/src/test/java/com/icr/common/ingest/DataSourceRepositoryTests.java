@@ -20,8 +20,8 @@ import com.icr.common.ingest.datamodel.AttributeType;
 import com.icr.common.ingest.datamodel.DataSource;
 import com.icr.common.ingest.datamodel.DataSourceType;
 import com.icr.common.ingest.datamodel.DataType;
-import com.icr.ingest.webservices.Application;
-import com.icr.ingest.webservices.DataSourceRepository;
+import com.icr.ingest.Application;
+import com.icr.ingest.repositories.DataSourceRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { Application.class })

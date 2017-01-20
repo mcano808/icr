@@ -1,4 +1,4 @@
-package com.icr.ingest.webservices;
+package com.icr.ingest.repositories;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;

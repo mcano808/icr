@@ -1,5 +1,5 @@
 
-package com.icr.ingest.webservices;
+package com.icr.ingest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

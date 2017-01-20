@@ -1,4 +1,4 @@
-package com.icr.ingest.webservices;
+package com.icr.ingest.repositories;
 
 import java.util.List;
 
