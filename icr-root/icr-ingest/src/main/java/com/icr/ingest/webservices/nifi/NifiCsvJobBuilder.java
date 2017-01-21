@@ -15,18 +15,23 @@ import org.apache.nifi.web.api.entity.TemplatesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@org.springframework.stereotype.Component
+@Component
 public class NifiCsvJobBuilder
 { 
 
     @Autowired
     private NifiRestHandler nifiRestHandler;
+    
+    @Autowired
+    private Environment env;
 
 
     @Bean
@@ -47,7 +52,7 @@ public class NifiCsvJobBuilder
     public void buildJob() throws Exception
     {        
         // First get the root process group
-        ProcessGroupEntity rootGroup = nifiRestHandler.get("http://localhost:8080/nifi-api/process-groups/root",
+        ProcessGroupEntity rootGroup = nifiRestHandler.get(env.getProperty("nifi.server") + "/nifi-api/process-groups/root",
                 ProcessGroupEntity.class);
 
         RevisionDTO revision = new RevisionDTO();
@@ -60,13 +65,13 @@ public class NifiCsvJobBuilder
         newProcessGroup.setRevision(revision); 
         
         // Create the process group        
-        newProcessGroup = nifiRestHandler.post(String.format("http://localhost:8080/nifi-api/process-groups/%s/process-groups",
+        newProcessGroup = nifiRestHandler.post(String.format(env.getProperty("nifi.server") + "/nifi-api/process-groups/%s/process-groups",
                 rootGroup.getComponent().getId()), newProcessGroup, ProcessGroupEntity.class);        
 
         // Instantiate a template in the new process group
 
         // First get the instance
-        TemplatesEntity templateEntity = nifiRestHandler.get("http://localhost:8080/nifi-api/flow/templates",
+        TemplatesEntity templateEntity = nifiRestHandler.get(env.getProperty("nifi.server") + "/nifi-api/flow/templates",
                 TemplatesEntity.class);
 
         // TODO look this up via the data model
@@ -84,7 +89,7 @@ public class NifiCsvJobBuilder
         newTemplateRequest.setOriginY(0d);
 
         FlowEntity flow = nifiRestHandler.post(String
-                .format("http://localhost:8080/nifi-api/process-groups/%s/template-instance", newProcessGroup.getId()),
+                .format("%s/nifi-api/process-groups/%s/template-instance", env.getProperty("nifi.server"), newProcessGroup.getId()),
                 newTemplateRequest, FlowEntity.class);
 
         ObjectMapper mapper = new ObjectMapper();
