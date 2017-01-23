@@ -107,7 +107,7 @@ public class NifiRestHandler
      *            params
      * @return response
      */
-    public <T> T get(String url, Map<String, String> queryParams, Class<T> responseClass)
+    public <T> T get(String url, Map<String, String> queryParams, Class<T> responseClass) throws Exception
     {
         return getWithHeaders(url, queryParams, null, responseClass);
     }
@@ -124,6 +124,7 @@ public class NifiRestHandler
      * @return response
      */
     public ClientResponse getWithHeaders(String url, Map<String, String> queryParams, Map<String, String> headers)
+            throws Exception
     {
         // get the resource
         WebResource resource = client.resource(url);
@@ -150,12 +151,29 @@ public class NifiRestHandler
         }
 
         // perform the query
-        return builder.get(ClientResponse.class);
+        ClientResponse response = builder.get(ClientResponse.class);
+        errorCheck(url, queryParams, headers, response);
+        return response;
     }
-    
+
+    private void errorCheck(String url, Map<String, String> queryParams, Map<String, String> headers,
+            ClientResponse response) throws Exception
+    {
+        if (response.getStatus() >= 400)
+        {
+            throw new Exception(
+                    "Error calling url:" + url + "\n" + 
+                            (queryParams == null ? "" : (" queryParams: " + queryParams + "\n")) + 
+                            (headers == null ? "" : (" headers: " + headers.toString() + "\n")) + 
+                            " status code: " + response.getStatusInfo().getStatusCode() + "\n" + 
+                            " status message: " + response.getStatusInfo().getReasonPhrase() + "\n" + 
+                            " status family: " + response.getStatusInfo().getFamily());
+        }
+    }
+
     public <T> T getWithHeaders(String url, Map<String, String> queryParams, Map<String, String> headers,
-            Class<T> responseClass)
-    {        
+            Class<T> responseClass) throws Exception
+    {
         // perform the query
         return getWithHeaders(url, queryParams, headers).getEntity(responseClass);
     }
@@ -203,8 +221,7 @@ public class NifiRestHandler
      * @throws Exception
      *             ex
      */
-    public ClientResponse postWithHeaders(String url, Object entity, Map<String, String> headers)
-            throws Exception
+    public ClientResponse postWithHeaders(String url, Object entity, Map<String, String> headers) throws Exception
     {
         // get the resource
         WebResource.Builder resourceBuilder = addProxiedEntities(client.resource(url).type(MediaType.APPLICATION_JSON));
@@ -225,9 +242,11 @@ public class NifiRestHandler
         }
 
         // perform the request
-        return resourceBuilder.post(ClientResponse.class);
+        ClientResponse response = resourceBuilder.post(ClientResponse.class);
+        errorCheck(url, null, headers, response);
+        return response;
     }
-    
+
     public <T> T postWithHeaders(String url, Object entity, Map<String, String> headers, Class<T> responseClass)
             throws Exception
     {
@@ -286,7 +305,9 @@ public class NifiRestHandler
         }
 
         // perform the request
-        return resourceBuilder.post(ClientResponse.class);
+        ClientResponse response = resourceBuilder.post(ClientResponse.class);
+        errorCheck(url, null, headers, response);
+        return response;
     }
 
     public <T> T postMultiPartWithHeaders(String url, Object entity, Map<String, String> headers,
@@ -354,7 +375,9 @@ public class NifiRestHandler
         }
 
         // perform the request
-        return resourceBuilder.post(ClientResponse.class);
+        ClientResponse response = resourceBuilder.post(ClientResponse.class);
+        errorCheck(url, null, headers, response);
+        return response;
     }
 
     public <T> T postWithHeaders(String url, Map<String, String> formData, Map<String, String> headers,
@@ -413,7 +436,9 @@ public class NifiRestHandler
         }
 
         // perform the request
-        return resourceBuilder.put(ClientResponse.class);
+        ClientResponse response = resourceBuilder.put(ClientResponse.class);
+        errorCheck(url, null, headers, response);
+        return response;
     }
 
     public <T> T putWithHeaders(String url, Object entity, Map<String, String> headers, Class<T> responseClass)
@@ -481,7 +506,9 @@ public class NifiRestHandler
         }
 
         // perform the request
-        return resourceBuilder.put(ClientResponse.class);
+        ClientResponse response = resourceBuilder.put(ClientResponse.class);
+        errorCheck(url, null, headers, response);
+        return response;
     }
 
     public <T> T putWithHeaders(String url, Map<String, String> formData, Map<String, String> headers,
@@ -535,7 +562,9 @@ public class NifiRestHandler
         }
 
         // perform the query
-        return resourceBuilder.delete(ClientResponse.class);
+        ClientResponse response = resourceBuilder.delete(ClientResponse.class);
+        errorCheck(url, null, headers, response);
+        return response;
     }
 
     /**
@@ -564,7 +593,10 @@ public class NifiRestHandler
         }
 
         // perform the request
-        return addProxiedEntities(resource.type(MediaType.APPLICATION_FORM_URLENCODED)).delete(ClientResponse.class);
+        ClientResponse response = addProxiedEntities(resource.type(MediaType.APPLICATION_FORM_URLENCODED))
+                .delete(ClientResponse.class);
+        errorCheck(url, queryParams, null, response);
+        return response;
     }
 
     public <T> T delete(String url, Map<String, String> queryParams, Class<T> responseClass) throws Exception
@@ -598,7 +630,9 @@ public class NifiRestHandler
                         .entity(entity);
 
         // perform the request
-        return resourceBuilder.post(ClientResponse.class);
+        ClientResponse response = resourceBuilder.post(ClientResponse.class);
+        errorCheck(url, null, null, response);
+        return response;
     }
 
 }

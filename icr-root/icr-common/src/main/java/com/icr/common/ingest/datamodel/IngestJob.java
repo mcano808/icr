@@ -12,6 +12,7 @@ public class IngestJob
 {
     @Id
     private String id;
+    private IngestJobType jobType;
     private String name;
     private String description;
     private List<JobProperty> jobProperties = new ArrayList<>();
@@ -21,6 +22,16 @@ public class IngestJob
     public String getId()
     {
         return id;
+    }
+
+    public IngestJobType getJobType()
+    {
+        return jobType;
+    }
+
+    public void setJobType(IngestJobType jobType)
+    {
+        this.jobType = jobType;
     }
 
     public String getName()
