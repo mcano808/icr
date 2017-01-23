@@ -16,10 +16,11 @@ import com.icr.common.ingest.datamodel.DataSource;
  */
 public class AvroUtils {
 
+  // Placeholder, need to determine if this is necessary
   public static final String DEFAULT_NAMESPACE = "com.icr.ingest";
 
-  //TODO break this up into multiple methods, will need to check
-  //for defaults, complex data types, nested objects, etc.
+  //TODO break this up into multiple methods, will need to check/handle
+  // defaults, complex data types, nested objects, exclusions, etc.
   public static Schema getDataSourceAvroSchema(DataSource ds) {
     SchemaBuilder.RecordBuilder<Schema> builder =
         SchemaBuilder.record(ds.getName()).namespace(AvroUtils.DEFAULT_NAMESPACE);
