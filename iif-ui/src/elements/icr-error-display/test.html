@@ -1,0 +1,21 @@
+<html>
+<head>
+  <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="./icr-error-display.html">
+  <title> Test Page</title>
+</head>
+<body>
+  <h1> icr-error-display Test</h1>
+  <h3>Test with no error</h3>
+  <icr-error-display has-error="false"></icr-error-display>
+
+  <h3>Test with error & no custom message</h3>
+  <icr-error-display has-error="true"></icr-error-display>
+
+  <h3>Test with error with custom message</h3>
+  <icr-error-display
+  has-error="false"
+  show-error-message
+  error-message="This is a custom message for icr-error-display"></icr-error-display>
+</body>
+</html>

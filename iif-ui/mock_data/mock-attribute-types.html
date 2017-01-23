@@ -1,0 +1,49 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="mock-attribute-types">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+  </template>
+  <script>
+    Polymer({
+      is: 'mock-attribute-types',
+      properties:{
+        attributeTypes:{
+          type: Array,
+          readOnly: true,
+          notify: true,
+          value:()=>{
+            return [{
+              name:'LAT',
+              description:'The latitude point.',
+              dataType: 'DECIMAL'
+            },{
+              name: 'LON',
+              description:'The latitude point.',
+              dataType:'DECIMAL'
+            },{
+              name: 'FREQ',
+              description: 'This is the frequency.',
+              dataType:'DECIMAL'
+            },{
+              name:'NAME',
+              description: 'This is the name.',
+              dataType:'STRING'
+            },{
+              name:'DOB',
+              description: 'This is the date of birth.',
+              dataType:'DATETIME'
+            },{
+              name:'other',
+              description:'This is a generic attribute type.',
+              dataType:'STRING'
+            }]
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>

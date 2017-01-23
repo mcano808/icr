@@ -1,0 +1,99 @@
+{
+  "id": null,
+  "name": "REST to ElasticSearch",
+  "description": "A job to ingest data from a restful URL into elasticsearch",
+  "jobProperties": [
+    {
+      "name": "Schedule",
+      "description": "The schedule in which the job will run",
+      "required": true,
+      "type": "STRING",
+      "group": "Group A",
+      "defaultValue": "0 0 *"
+    },
+    {
+      "name": "URL",
+      "description": "the url from which to acquire data",
+      "required": true,
+      "type": "INTEGER",
+      "group": "Group A",
+      "defaultValue": "https://my.stuff.com"
+    }
+  ],
+  "dataSource": {
+    "id": "1234",
+    "name": null,
+    "dataSourceType": {
+      "name": "Discrete Position",
+      "description": "This datasource type has a single defined location."
+    },
+    "attributeMappings": [
+      {
+        "originalAttribute": "OrigVal1",
+        "newAttribute": "NewVal1",
+        "attributeType": {
+          "name": "LAT",
+          "description": "This is a latitude",
+          "dataType": "DECIMAL"
+        },
+        "dataType": "DECIMAL",
+        "formatters": [
+          {
+            "name": "DateTransformer",
+            "properties": {
+              "formatString": "yyyy-MM-dd HH:mm:SS"
+            }
+          }
+        ],
+        "transformers": [
+          {
+            "name": "ArithmeticTransformer",
+            "properties": {
+              "operation": "* 1000"
+            }
+          },
+          {
+            "name": "RegexTransformer",
+            "properties": {
+              "search": ".*",
+              "replace": "stuff"
+            }
+          }
+        ]
+      },
+      {
+        "originalAttribute": "OrigVal2",
+        "newAttribute": "NewVal2",
+        "attributeType": {
+          "name": "LON",
+          "description": "This is a longitude",
+          "dataType": "DECIMAL"
+        },
+        "dataType": "DECIMAL",
+        "formatters": [
+          {
+            "name": "DateTransformer",
+            "properties": {
+              "formatString": "yyyy-MM-dd HH:mm:SS"
+            }
+          }
+        ],
+        "transformers": [
+          {
+            "name": "ArithmeticTransformer",
+            "properties": {
+              "operation": "* 1000"
+            }
+          },
+          {
+            "name": "RegexTransformer",
+            "properties": {
+              "search": ".*",
+              "replace": "stuff"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

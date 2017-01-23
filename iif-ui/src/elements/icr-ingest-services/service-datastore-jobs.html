@@ -1,0 +1,77 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../icr-ingest-behaviors/baseUrlBehavior.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="service-datastore-jobs">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+    <iron-ajax
+      id="ia"
+      auto
+      url="{{fullUrl}}"
+      handle-as="json"
+      on-response="handleResponse"
+      on-error="handleError"
+      debounce-duration="500"
+      loading="{{loading}}"></iron-ajax>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'service-datastore-jobs',
+      behaviors:[icrBehaviors.baseUrl],
+      properties:{
+        error:{
+          type: Object,
+          readOnly: true,
+          notify: true
+        },
+        endPoint:{
+          type: String,
+          notify: true,
+          readOnly: true,
+          value: '/discover/dataStoreJobs'
+        },
+        failed:{
+          type:Boolean,
+          notify: true,
+          value: false
+        },
+        fullUrl:{
+          type: String,
+          computed:'_makeFullUrl(baseUrl, endPoint)'
+        },
+        dataStoreJobs:{
+          type: Array,
+          notify: true,
+          value:()=>{return [];}
+        },
+        loading:{
+          type:Boolean,
+          readOnly: true,
+          notify: true
+        }
+      },
+      _makeFullUrl(baseUrl, endPoint){
+        console.log('making the full url:', arguments);
+        return baseUrl + endPoint;
+      },
+      getJobs(){
+        this.$.ia.generateRequest();
+      },
+      handleError(error){
+        console.warn('JOBS error: ', arguments);
+        this._setError(error)
+        this.failed = true;
+      },
+      handleResponse(data){
+        console.info('JOBS response: ', data.detail.response._embedded.dataStoreJobs);
+        this.jobs = data.detail.response._embedded.dataStoreJobs;
+        this.failed = false;
+      }
+    });
+  </script>
+</dom-module>

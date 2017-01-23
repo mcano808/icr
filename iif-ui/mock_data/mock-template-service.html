@@ -1,0 +1,97 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="mock-template-service">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'mock-template-service',
+      properties:{
+        mockTemplates:{
+          type: Array,
+          readOnly:true,
+          notify: true,
+          value:()=>{ return [{
+            id: "1234",
+            name: null,
+            templateName:"URL to JSON Sample",
+            description:"This is a description of the sample template.",
+            jobProperties: [{
+              name: "prop1",
+              description: "prop1 description",
+              required: true,
+              dataType: "DECIMAL",
+              defaultValue: 0
+            },{
+              name: "prop2",
+              description: "Prop2 description",
+              required: false,
+              dataType: "STRING",
+              defaultValue: "abcdefgh"
+            }],
+            attributeMappings: [{
+              originalAttribute: "OrigVal1",
+              newAttribute: "NewVal1",
+              attributeType: {
+                name: "LAT",
+                description: "This is a latitude",
+                dataType:"DECIMAL"
+              },
+              dataType: "DECIMAL",
+              formatters: [{
+                name: "DateTransformer",
+                properties: {
+                  formatString: "yyyy-MM-dd HH:mm:SS"
+                }
+              }],
+              transformers: [{
+                name: "ArithmeticTransformer",
+                properties: {
+                  operation: "* 1000"
+                }
+              },{
+                name: "RegexTransformer",
+                properties: {
+                  search: ".*",
+                  replace: "stuff"
+                }
+              }]
+            },{
+              originalAttribute: "OrigVal2",
+              newAttribute: "NewVal2",
+              attributeType: {
+                name: "LON",
+                description: "This is a longitude",
+                dataType:'DECIMAL'
+              },
+              dataType: "DECIMAL",
+              formatters: [{
+                name: "DateTransformer",
+                properties: {
+                  formatString: "yyyy-MM-dd HH:mm:SS"
+                }
+              }],
+              transformers: [{
+                name: "ArithmeticTransformer",
+                properties: {
+                  operation: "* 1000"
+                }
+              },{
+                name: "RegexTransformer",
+                properties: {
+                  search: ".*",
+                  replace: "stuff"
+                }
+              }]
+            }]
+          }]}
+        }
+      }
+    });
+  </script>
+</dom-module>

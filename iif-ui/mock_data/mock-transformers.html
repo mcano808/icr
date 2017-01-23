@@ -1,0 +1,37 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="mock-transformers">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'mock-transformers',
+      properties:{
+        transformers:{
+          type:Array,
+          notify: true,
+          readOnly: true,
+          value: ()=>{
+            return[{
+              name:'Arithmetic',
+              properties:{
+                operation:'* 1000'
+              }
+            },{
+              name: 'Regex Replace',
+              properties:{
+                search:'.*',
+                replace: 'stuff'
+              }
+            }]
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>

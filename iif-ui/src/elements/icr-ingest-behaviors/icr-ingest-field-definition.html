@@ -1,0 +1,28 @@
+<script>
+//Initialize the object if its not alread there.
+var icrBehaviors = icrBehaviors || {};
+
+//Define this particular behavior.
+/**
+ * This behavior represents the fieldDefinition model.  By placing this structure
+ * in a behavior method, it can be added in to any object that needs it and generate
+ * the proper data structure.  If we need to make a change to the structure, we
+ * can make it here.
+ */
+icrBehaviors.fieldDefinition = {
+  properties:{},
+  newFieldDefinition(){
+    return {
+      originalAttribute:'',
+      newAttribute:'',
+      attributeType:this.newAttributeType(),
+      dataType:'',
+      formatters:[],
+      transformers:[]
+    };
+  },
+  newAttributeType(){
+    return {name:'', description:''};
+  }
+}
+</script>

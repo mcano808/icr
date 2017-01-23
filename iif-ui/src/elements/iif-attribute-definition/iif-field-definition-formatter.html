@@ -1,0 +1,61 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<dom-module id="iif-field-definition-formatter">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+      }
+    </style>
+      <div class="vertical layout">
+        <div role="listbox">
+          <template is="dom-repeat" items="{{formatters}}" index-as="index">
+              <paper-item>
+                  <span class="flex">{{item}}</span>
+                <paper-icon-button icon="clear" on-tap="removeFormatter"></paper-icon-button>
+              </paper-item>
+          </template>
+        </div>
+        <div class="horizontal layout end">
+          <paper-input id="formatter" tabindex="0" class="flex" label="Format String..." value="{{formatterToAdd}}"></paper-input>
+          <paper-icon-button id="addFormatterTrigger" disabled icon="add" on-tap="addFormatter"></paper-icon-button>
+        </div>
+      </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'iif-field-definition-formatter',
+      properties:{
+        formatterToAdd:{
+          type:String,
+          notify: true,
+          observer:'_formatterToAddChanged'
+        },
+        formatters:{
+          type: Array,
+          notify: true
+        }
+      },
+      _formatterToAddChanged(newFormatter, oldFormatter){
+        var setDisabledTo = true;
+        if(newFormatter.length > 0){
+          setDisabledTo = false;
+        }
+        this.$.addFormatterTrigger.disabled = setDisabledTo;
+      },
+      addFormatter(){
+        this.push('formatters',this.formatterToAdd);
+        //Clear the value
+        this.formatterToAdd = '';
+        this.$.formatter.focus();
+      },
+      removeFormatter(event){
+        this.splice('formatters', event.model.index, 1);
+      }
+    });
+  </script>
+</dom-module>

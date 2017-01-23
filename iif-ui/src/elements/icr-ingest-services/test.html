@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ingest Services Tests</title>
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../../bower_components/polymer/polymer.html">
+    <link rel="import" href="service-ingest-jobs.html">
+    <link rel="import" href="service-datastore-jobs.html">
+    <link rel="import" href="service-datatypes.html">
+  </head>
+  <body>
+    <template is="dom-bind" id="t">
+      <service-datastore-jobs data-store-jobs="{{dataStoreJobs}}" failed="{{dataStoreFailed}}"></service-datastore-jobs>
+      <service-datatypes data-types="{{dataTypes}}" failed="{{datatypesFailed}}"></service-datatypes>
+      <service-ingest-jobs ingest-jobs="{{ingestJobs}}" failed="{{ingestJobsFailed}}"></service-ingest-jobs>
+      <p>Services Running</p>
+      <ul>
+        <li>Data Store Jobs:  {{!dataStoreFailed}} count: {{dataStoreJobs.length}}</li>
+        <ul>
+          <template is="dom-repeat" items="{{dataStoreJobs}}" index-as="index">
+            <li>{{item.name}}</li>
+          </template>
+        </ul>
+        <li>Datatypes: {{!datatypesFailed}} count: {{dataTypes.length}}</li>
+        <ul>
+          <template is="dom-repeat" items="{{dataTypes}}" index-as="index">
+            <li>{{item}}</li>
+          </template>
+        </ul>
+        <li>Ingest Jobs: {{!ingestJobsFailed}} count: {{ingestJobs.length}}</li>
+        <ul>
+          <template is="dom-repeat" items="{{ingestJobs}}" index-as="index">
+            <li>{{item.name}}</li>
+          </template>
+        </ul>
+      </ul>
+
+    </template>
+    <script>
+      var t = document.getElementById('t');
+      t.test = "Test test";
+    </script>
+  </body>
+</html>
