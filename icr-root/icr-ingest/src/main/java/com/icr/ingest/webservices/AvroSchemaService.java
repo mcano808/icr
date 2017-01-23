@@ -24,15 +24,21 @@ public class AvroSchemaService {
   @Autowired
   DataSourceRepository dsRepository;
   
+  // SLF4J LOGGER 
   private static final Logger logger = LoggerFactory.getLogger(AvroSchemaService.class);
   
+  /**
+   * Utilizes AvroUtils to generate an avro schema, json string. 
+   * @param id
+   * @return
+   */
   @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON)
   public @ResponseBody ResponseEntity<String> getAvroSchemaForDataSource(@PathVariable("id") String id) {
 
     DataSource ds = dsRepository.findOne(id);
     Schema raw = AvroUtils.getDataSourceAvroSchema(ds);
     
-    logger.info("Schema: \n{}\n", raw.toString(true));
+    logger.debug("Schema: \n{}\n", raw.toString(true));
     
     return ResponseEntity.ok(raw.toString());
   }

@@ -7,11 +7,19 @@ import org.apache.avro.SchemaBuilder.FieldAssembler;
 import com.icr.common.ingest.datamodel.AttributeMapping;
 import com.icr.common.ingest.datamodel.DataSource;
 
-
+/**
+ * INCOMPLETE - Non-Spring utility class to help generate AVRO schema for
+ * Data Sources. 
+ * @author Chris Monton
+ * @date January 22, 2017
+ *
+ */
 public class AvroUtils {
 
   public static final String DEFAULT_NAMESPACE = "com.icr.ingest";
 
+  //TODO break this up into multiple methods, will need to check
+  //for defaults, complex data types, nested objects, etc.
   public static Schema getDataSourceAvroSchema(DataSource ds) {
     SchemaBuilder.RecordBuilder<Schema> builder =
         SchemaBuilder.record(ds.getName()).namespace(AvroUtils.DEFAULT_NAMESPACE);
