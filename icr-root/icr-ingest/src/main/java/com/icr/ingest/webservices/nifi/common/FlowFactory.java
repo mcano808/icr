@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.icr.common.ingest.datamodel.IngestJobType;
 import com.icr.ingest.webservices.nifi.NifiRestHandler;
 import com.icr.ingest.webservices.nifi.ingest.DropboxCsvBuilder;
-import com.icr.ingest.webservices.nifi.ingest.FlowBuilder;
 
 @Component
 public class FlowFactory

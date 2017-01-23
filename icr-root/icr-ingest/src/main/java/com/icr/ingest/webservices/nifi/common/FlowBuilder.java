@@ -1,4 +1,4 @@
-package com.icr.ingest.webservices.nifi.ingest;
+package com.icr.ingest.webservices.nifi.common;
 
 import org.apache.nifi.web.api.entity.FlowEntity;
 

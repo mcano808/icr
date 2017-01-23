@@ -13,11 +13,13 @@ public class JobProperty
     private DataType type;
     private String group;
     private Object defaultValue;
-
+    private String reference;
+    
     @JsonCreator
     public JobProperty(@JsonProperty("name") String name, @JsonProperty("description") String description,
             @JsonProperty("required") boolean required, @JsonProperty("type") DataType type,
-            @JsonProperty("group") String group, @JsonProperty("defaultValue") Object defaultValue)
+            @JsonProperty("group") String group, @JsonProperty("defaultValue") Object defaultValue,
+            @JsonProperty("refrence") String reference)
     {
         this.name = name;
         this.description = description;
@@ -25,6 +27,7 @@ public class JobProperty
         this.type = type;
         this.group = group;
         this.defaultValue = defaultValue;
+        this.reference = reference;
     }
 
     public String getName()
@@ -45,6 +48,16 @@ public class JobProperty
     public Object getDefaultValue()
     {
         return defaultValue;
+    }
+
+    public String getReference()
+    {
+        return reference;
+    }
+
+    public void setReference(String reference)
+    {
+        this.reference = reference;
     }
 
     public DataType getType()

@@ -1,4 +1,4 @@
-package com.icr.ingest.webservices.nifi.ingest;
+package com.icr.ingest.webservices.nifi.common;
 
 import org.apache.nifi.web.api.entity.FlowEntity;
 import org.apache.nifi.web.api.entity.ProcessGroupEntity;
@@ -9,7 +9,6 @@ import com.icr.common.ingest.datamodel.DataSource;
 import com.icr.common.ingest.datamodel.IngestJob;
 import com.icr.common.ingest.datamodel.UberJob;
 import com.icr.ingest.webservices.nifi.NifiRestHandler;
-import com.icr.ingest.webservices.nifi.common.NifiRestUtils;
 
 
 public abstract class AbstractFlowBuilder implements FlowBuilder

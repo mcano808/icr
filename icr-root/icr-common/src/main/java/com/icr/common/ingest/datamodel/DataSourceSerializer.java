@@ -59,9 +59,9 @@ public class DataSourceSerializer
         job.setDescription("A job to ingest data from a restful URL into elasticsearch");
         job.setDataSourceId("1234");
         job.getJobProperties().add(new JobProperty("Schedule", "The schedule in which the job will run", true,
-                DataType.STRING, "Group A", "0 0 *"));
+                DataType.STRING, "Group A", "0 0 *", "ref1"));
         job.getJobProperties().add(new JobProperty("URL", "the url from which to acquire data", true, DataType.INTEGER,
-                "Group A", "https://my.stuff.com"));
+                "Group A", "https://my.stuff.com", "ref2"));
 
         ObjectMapper om = new ObjectMapper();
         try

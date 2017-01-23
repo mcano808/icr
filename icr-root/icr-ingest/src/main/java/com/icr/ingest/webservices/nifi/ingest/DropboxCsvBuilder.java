@@ -5,6 +5,7 @@ import org.springframework.core.env.Environment;
 
 import com.icr.common.ingest.datamodel.UberJob;
 import com.icr.ingest.webservices.nifi.NifiRestHandler;
+import com.icr.ingest.webservices.nifi.common.AbstractFlowBuilder;
 
 public class DropboxCsvBuilder extends AbstractFlowBuilder
 {
