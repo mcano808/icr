@@ -63,6 +63,11 @@
 			<groupId>org.apache.avro</groupId>
 			<artifactId>avro</artifactId>
 		</dependency>
+		<!-- Jackson AVRO dependency -->
+		<!-- <dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-avro</artifactId>
+		</dependency> -->
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

@@ -25,12 +25,17 @@
 	</properties>
 	<dependencyManagement>
 		<dependencies>
-            <!-- Jackson -->
+			<!-- Jackson -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 				<version>${jackson.version}</version>
 			</dependency>
+			<!-- <dependency>
+				<groupId>com.fasterxml.jackson.dataformat</groupId>
+				<artifactId>jackson-dataformat-avro</artifactId>
+				<version>${jackson.version}</version>
+			</dependency> -->
 			<!-- Apache Nifi -->
 			<dependency>
 				<groupId>org.apache.nifi</groupId>
@@ -48,6 +53,11 @@
 				<artifactId>avro</artifactId>
 				<version>${avro.version}</version>
 			</dependency>
+			<dependency>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-tools</artifactId>
+                <version>${avro.version}</version>
+            </dependency>
 			<!-- Jersey -->
 			<dependency>
 				<groupId>com.sun.jersey</groupId>
@@ -82,25 +92,25 @@
 			<id>dev-monton</id>
 			<properties>
 				<mongodb.host>monton-server-1</mongodb.host>
-                <mongodb.port>27017</mongodb.port>
-                <nifi.server>http://monton-server-1:8080</nifi.server>
+				<mongodb.port>27017</mongodb.port>
+				<nifi.server>http://monton-server-1:8080</nifi.server>
 			</properties>
 		</profile>
 	</profiles>
-	
+
 	<build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <delimiters>
-                        <delimiter>@</delimiter>
-                    </delimiters>
-                    <useDefaultDelimiters>false</useDefaultDelimiters>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-	
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<delimiters>
+						<delimiter>@</delimiter>
+					</delimiters>
+					<useDefaultDelimiters>false</useDefaultDelimiters>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

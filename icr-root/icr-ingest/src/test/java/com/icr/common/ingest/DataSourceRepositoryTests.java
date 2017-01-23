@@ -77,8 +77,6 @@ public class DataSourceRepositoryTests {
 				null, null, null));
 		mappings.add(new AttributeMapping("Incorporated", "incorporated", new AttributeType("", "", DataType.STRING),
 				null, null, null));
-		mappings.add(new AttributeMapping("County", "county", new AttributeType("", "", DataType.STRING),
-				null, null, null));
 		mappings.add(new AttributeMapping("Total Baths", "baths", new AttributeType("", "", DataType.INTEGER),
 				null, null, null));
 		mappings.add(new AttributeMapping("Total Bedrooms", "bedrooms", new AttributeType("", "", DataType.INTEGER),
@@ -100,8 +98,6 @@ public class DataSourceRepositoryTests {
 		mappings.add(new AttributeMapping("School District", "school_district", new AttributeType("", "", DataType.STRING),
 				null, null, null));
 		mappings.add(new AttributeMapping("Listing Agent Email", "agent_email", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Measurement Source", "measurement_source", new AttributeType("", "", DataType.STRING),
 				null, null, null));
 		mappings.add(new AttributeMapping("Under Contract Date", "contract_date", new AttributeType("", "", DataType.DATE),
 				formatters, null, null));
