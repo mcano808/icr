@@ -1,0 +1,46 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="icr-error-display">
+  <template>
+    <style include="iron-flex">
+      :host {
+        display: block;
+      }
+
+    </style>
+    <div class="horizontal layout">
+      <template is="dom-if" if="{{hasError}}" restamp="true">
+        <template is="dom-if" if="{{showErrorMessage}}" restamp="true">
+          <p class="errorMessage">{{errorMessage}}</p>
+        </template>
+        <template is="dom-if" if="{{!showErrorMessage}}" restamp="true">
+          <p class="errorMessage">Service is down. </p>
+        </template>
+      </template>
+  </template>
+  <script>
+    Polymer({
+      is: 'icr-error-display',
+      properties:{
+        hasError:{
+          type:Boolean,
+          observer:'hasErrorChanged'
+        },
+        showErrorMessage:{
+          type:Boolean,
+          value: false,
+          notify: true
+        },
+        errorMessage:{
+          type:String,
+          value:''
+        }
+      },
+      observers:[],
+      hasErrorChanged(){
+        console.log('error changed:', arguments);
+      }
+    });
+  </script>
+</dom-module>

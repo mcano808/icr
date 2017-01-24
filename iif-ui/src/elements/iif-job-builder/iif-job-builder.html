@@ -1,0 +1,196 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../shared-styles.html">
+
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item-body.html"><link rel="import" href="../../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="../../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="iport" href="../../../bower_components/neon-animation/neon-animatable.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animations.html">
+
+<link rel="import" href="../../../mock_data/mock-service.html">
+<link rel="import" href="../iif-job-configuration/iif-job-configuration.html">
+<link rel="import" href="../iif-attribute-definition/iif-attribute-definition-list.html">
+<link rel="import" href="../iif-cron-scheduler/iif-cron-scheduler.html">
+<dom-module id="iif-job-builder">
+  <template>
+    <style is="custom-style" include="shared-styles iron-flex iron-positioning">
+      :host {
+        display: block;
+        @apply(--layout-vertical);
+        @apply(--layout-flex);
+      }
+      neon-animated-pages{
+        @apply(--layout-flex);
+      }
+      neon-animatable {
+        @apply(--layout-horizontal);
+      }
+      #tryAgain{
+        color: red;
+        font-weight:bolder;
+      }
+      .item{
+        cursor: pointer;
+      }
+      .labelInfo{
+        font-style: italic;
+        color: steelblue;
+      }
+    </style>
+
+    <mock-service jobs="{{jobTemplates}}"></mock-service>
+      <paper-tabs fit-container selected="{{currentStep}}" autoselect>
+        <paper-tab>Job Config - <span class="labelInfo">{{selectedTemplate.name}}</span></paper-tab>
+        <paper-tab>Attribute Fields <span class="labelInfo">( {{selectedTemplate.attributeMappings.length}} )</span></paper-tab>
+        <paper-tab>Data Persistance</paper-tab>
+      </paper-tabs>
+      <neon-animated-pages
+        selected="[[currentStep]]"
+        entry-animation="slide-from-right-animation"
+        exit-animation="slide-left-animation">
+        <!--  Template Selection Page  -->
+        <neon-animatable>
+          <!--  Warning when no template available -->
+          <template is="dom-if" if="{{ingestJobsFailed}}" restamp="true">
+            <div class="vertical layout center flex-2">
+              <h3> There are no templates available </h3>
+              <paper-button id="tryAgain" on-tap="_getTemplatesAgain">Try Again</paper-button>
+            </div>
+          </template>
+          <div class="horizontal layout flex">
+            <!--  Template selection-->
+            <paper-listbox selected="{{selectedTemplateIdx}}">
+              <template is="dom-repeat" items="{{jobTemplates}}" index-as="index">
+                <paper-item class="item flex">
+                  <paper-item-body two-line>
+                    <div>{{item.name}}</div>
+                    <div secondary>{{item.description}}</div>
+                  </paper-item-body>
+                </paper-item>
+              </template>
+            </paper-listbox>
+            <!--  Configuration control-->
+            <div class="vertical layout flex">
+              <paper-tabs selected="{{configurationSelection}}" autoselect>
+                <paper-tab>Configuration</paper-tab>
+                <paper-tab>Scheduling</paper-tab>
+              </paper-tabs>
+              <iron-pages selected="{{configurationSelection}}" class="flex">
+                <section>
+                  <iif-job-configuration
+                  id="config"
+                  class="flex"
+                  selected-template="{{selectedTemplate}}"
+                  ></iif-job-configuration>
+                </section>
+                <section>
+                  <iif-cron-scheduler
+                    schedule="{{schedule}}"
+                    valid="{{scheduleValid}}"></iif-cron-scheduler>
+                </section>
+              </iron-pages>
+            </div>
+          </div>
+        </neon-animatable>
+        <neon-animatable>
+          <div class="vertical layout flex">
+            <template is="dom-if" if="{{listHasErrors}}" restamp="true">
+              <div class="horizontal layout flex">
+                <p>Errors here</p>
+              </div>
+            </template>
+            <paper-input label="Name..." value="{{jobName}}" class="flex"></paper-input>
+            <paper-input label="Description..." value="{{jobDescription}}" class="flex"></paper-input>
+            <paper-button raised>Load Sample</paper-button>
+            <iif-attribute-definition-list
+              class="flex"
+              attribute-mappings="{{selectedTemplate.attributeMappings}}"
+              errors="{{listErrors}}"
+              has-errors="{{listHasErrors}}"></iif-attrobute-definition-list>
+          </div>
+        </neon-animatable>
+        <neon-animatable>
+          <div class="flex" style="background-color:red;">Persistance</div>
+        </neon-animatable>
+      <neon-animated-pages>
+  </template>
+  <script>
+    Polymer({
+      is: 'iif-job-builder',
+      properties:{
+        configurationSelection:{
+          type: Number,
+          value: 0
+        },
+        currentStep:{
+          type: Number,
+          value: 0
+        },
+        jobDescription:{
+          type:String
+        },
+        jobName:{
+          type: String
+        },
+        jobTemplates:{
+          type:Array
+        },
+        listHasErrors:{
+          type: Boolean
+        },
+        selectedTemplate:{
+          type: Object,
+          notify: true,
+          value:0
+        },
+        selectedTemplateIdx:{
+          type: Number,
+          observer:"_selectedTemplateIndexChanged",
+          notify: true
+        }
+      },
+      observers:[],
+      _getTemplatesAgain(){
+        this.$.serviceJobs.getJobs();
+      },
+      nextProcessStep(){
+        const totalSteps = 3;
+        if(this.currentProcesStep < totalSteps -1){
+          this.set('currentProcesStep', this.currentProcesStep +1)
+        }else{
+          this.set('currentProcesStep', 0);
+        }
+      },
+      _selectedTemplateIndexChanged(newIdx, oldIdx){
+        let newTemplate = this.jobTemplates[newIdx]
+        console.info('Selected a template: ', newTemplate);
+        if(newTemplate.attributeMappings === undefined) newTemplate.attributeMappings = [];
+        this.set('selectedTemplate',newTemplate);
+        //this.currentProcesStep = 1;
+      },
+      _templateSelected(event){
+        this.selectedTemplate = event.model;
+      },
+      submitJob(){
+        let submitObject = {
+          name:this.jobName,
+          jobProperties:this.selectedTemplate.jobProperties,
+          attributeMappings:this.selectedTemplate.attributeMappings
+        };
+
+        console.info('The final product: ', submitObject);
+        //TODO send the submitObject back to a service someplace.
+      }
+    });
+  </script>
+</dom-module>

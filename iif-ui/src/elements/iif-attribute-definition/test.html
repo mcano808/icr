@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Transformers Test</title>
+    <script type="text/javascript" src="../../../bower_components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="../../../bower_components/polymer/polymer.html">
+    <link rel="import" href="../../../mock_data/mock-service.html">
+    <link rel="import" href="iif-field-definition-transformer.html">
+    <link rel="import" href="./iif-field-definition-attributes.html">
+    <link rel="import" href="./iif-attribute-definition-list.html">
+  </head>
+  <body style="height:100%">
+    <template is="dom-bind" id="t">
+      <mock-service  transformers="{{transformers}}"></mock-service>
+      <h1> Transformers avaialable: {{transformers.length}}</h1>
+      <iif-field-definition-transformer transformer-options="{{transformers}}"></iif-field-definition-transformer>
+      <h1>Field Attributes</h1>
+      <iif-field-definition-attributes></iif-field-definition-attributes>
+      <h1>Attribute Definition List</h1>
+      <iif-attribute-definition-list
+        attribute-mappings="{{selectedTemplate.attributeMappings}}">
+      </iif-attribute-definition-list>
+
+    </template>
+    <script>
+      var t = document.getElementById('t');
+      t.selectedTemplate ={
+        "name": "REST to ElasticSearch",
+        "description": "A job to ingest data from a restful URL into elasticsearch",
+        "jobProperties": [
+          {
+            "name": "Schedule",
+            "description": "The schedule in which the job will run",
+            "required": true,
+            "type": "STRING",
+            "group": "Group A",
+            "defaultValue": "0 0 *"
+          },
+          {
+            "name": "URL",
+            "description": "the url from which to acquire data",
+            "required": true,
+            "type": "INTEGER",
+            "group": "Group A",
+            "defaultValue": "https://my.stuff.com"
+          }
+        ],
+        "dataSource": null,
+        "attributeMappings":[],
+        "_links": {
+          "self": {
+            "href": "http://icr-server-1:8090/jobs/5876af95bb3e823332953f93"
+          },
+          "job": {
+            "href": "http://icr-server-1:8090/jobs/5876af95bb3e823332953f93"
+          }
+        }
+      }
+
+    </script>
+  </body>
+</html>

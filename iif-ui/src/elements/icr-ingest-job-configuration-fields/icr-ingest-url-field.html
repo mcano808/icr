@@ -1,0 +1,79 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="icr-ingest-url-field">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+      iron-icon[icon="check-circle"]{
+        --iron-icon-stroke-color: green;
+        --iron-icon-fill-color: green;
+      }
+      iron-icon[icon="cancel"]{
+        --iron-icon-stroke-color: red;
+        --iron-icon-fill-color: red;
+      }
+    </style>
+    <paper-button id="testBtn" class="flex" on-tap="testUrl">
+      Test URL
+    </paper-button>
+    <template is="dom-if" if="{{isValid}}" restamp="true">
+      <iron-icon icon="check-circle"></iron-icon>
+    </template>
+    <template is="dom-if" if="{{!isValid}}" restamp="true">
+      <iron-icon icon="cancel"></iron-icon>
+    </template>
+  </template>
+  <script>
+    Polymer({
+      is: 'icr-ingest-url-field',
+      properties:{
+        urlString:{
+          type: String,
+          notify: true
+        },
+        userName:{
+          type:String
+        },
+        userPassword:{
+          type:String
+        },
+        isValid:{
+          type: Boolean,
+          notify: true,
+          value: false
+        },
+        dataSample:{
+          type:Object,
+          notify: true,
+          value: ()=>{ return {};}
+        },
+        requestParams:{
+          type:Object
+        }
+      },
+      observers:['_validationInfoChange(urlString, userName, userPassword, requestParams.*)'],
+      _validationInfoChange(urlString, userName, userPassword, requestParamsChangeRecord){
+        console.info("validation info changed: ", arguments);
+      },
+      testUrl(){
+        console.info('Testing url: ', this. urlString);
+        this.isValid = !this.isValid;
+        if(this.isValid){
+          this.$.testBtn.innerHTML = "Good Job!"
+        }else{
+          this.$.testBtn.innerHTML = "Failed Test."
+        }
+
+      }
+    });
+  </script>
+</dom-module>

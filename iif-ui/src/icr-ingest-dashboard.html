@@ -1,0 +1,54 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="./elements/icr-ingest-server-status/icr-ingest-server-status.html">
+<link rel="import" href="./elements/icr-ingest-job-list/icr-ingest-job-list.html">
+<dom-module id="icr-ingest-dashboard">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <icr-ingest-server-status id="serverStatus" ></icr-ingest-server-status>
+    </div>
+    <div class="card">
+      <icr-ingest-job-list id="jobList" ></icr-ingest-job-list>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'icr-ingest-dashboard',
+      properties:{
+        selected:{
+          type:Boolean,
+          value: false,
+          observer:'_selectedChanged'
+        }
+      },
+      _selectedChanged(newSelected){
+        if(!newSelected){
+          console.log('DASHBOARD selected changed', arguments);
+          this.$.serverStatus.stopDataRetrieval();
+          this.$.jobList.stopDataRetrieval();
+        }else{
+          this.$.serverStatus.startDataRetrieval();
+          this.$.jobList.startDataRetrieval();
+        }
+      }
+    });
+  </script>
+</dom-module>

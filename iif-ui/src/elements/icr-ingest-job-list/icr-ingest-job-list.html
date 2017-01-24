@@ -1,0 +1,63 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="./icr-job-list-item.html">
+<link rel="import" href="../icr-error-display/icr-error-display.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
+
+
+<dom-module id="icr-ingest-job-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    </style>
+    <!-- Data Elemetns -->
+
+    <h4>Job List</h4>
+      <icr-error-display has-error="{{jobLoadingError}}"></icr-error-display>
+
+      <template is="dom-if" if="{{!jobLoadingError}}" restamp="true">
+        <paper-list-box>
+          <template is="dom-repeat" items="{{jobs.apps.app}}" index-as="index">
+            <icr-job-list-item line-item="{{item}}"></icr-job-list-item>
+          </template>
+        </paper-list-box>
+      </template>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'icr-ingest-job-list',
+      properties:{
+        jobError:{
+          type: Boolean,
+          notify: true,
+          observer:'jobsErrorChanged'
+        },
+        jobLoadingError:{
+          type: Boolean,
+          observer:'jobLoadingErrorChanged'
+        },
+        jobs:{
+          type:Object,
+          value:()=>{return {};}
+        },
+        serviceErrors:{
+          type:Boolean,
+          notify: true
+        },
+      },
+      observers:[],
+      jobLoadingErrorChanged(){
+        console.log('job loading error changed: ', arguments);
+      },
+      startDataRetrieval(){
+        // this.$.jobs.start();
+      },
+      stopDataRetrieval(){
+        // this.$.jobs.stop();
+      }
+    });
+  </script>
+</dom-module>

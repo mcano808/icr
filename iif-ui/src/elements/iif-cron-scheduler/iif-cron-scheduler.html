@@ -1,0 +1,72 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-tooltip/paper-tooltip.html">
+
+<dom-module id="iif-cron-scheduler">
+  <template>
+    <style include="iron-flex">
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="vertical layout">
+
+    </div>
+    <div class="horizontal layout">
+      <paper-input id="schedMin" label="Min" value="{{schedule.min}}"></paper-input>
+      <paper-tooltip for="schedMin">Min. in the day: 0-59, range, list, * (every)</paper-tooltip>
+      <paper-input id="schedHr" label="Hr" value="{{schedule.hr}}"></paper-input>
+      <paper-tooltip for="schedHr">Hour in day: 0-23, range, list, * (every)</paper-tooltip>
+    </div>
+    <div class="horizontal layout">
+      <paper-input id="schedDom" label="DoM" value="{{schedule.dom}}"></paper-input>
+      <paper-tooltip for="schedDom">Day of Month: 1-31, range, list, * (every)</paper-tooltip>
+      <paper-input id="schedMoy" label="MoY" value="{{schedule.moy}}"></paper-input>
+      <paper-tooltip for="schedMoy">Month of Year: 1-12, range, list, * (every)</paper-tooltip>
+      <paper-input id="schedDow" label="DoW" value="{{schedule.dow}}"></paper-input>
+      <paper-tooltip for="schedDow">Day of Week: 0-7, range, list, * (every)</paper-tooltip>
+    </div>
+    <div class="horizontal layout">
+      <paper-input id="schedYear" label="Year" type="number" value="{{schedule.year}}"></paper-input>
+      <paper-tooltip for="schedYear">Year: 1-31, range, list, * (every)</paper-tooltip>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'iif-cron-scheduler',
+      properties:{
+        schedule: {
+          type: Object,
+          notify: true,
+          readOnly: true,
+          value:()=>{
+            return {
+              min:'',
+              hr:'',
+              dom:'',
+              moy:'',
+              dow:'',
+              year:''
+            }
+          }
+        },
+        valid:{
+          type: Boolean,
+          value: false,
+          notify: true,
+          readOnly: true
+        }
+      },
+      observers:['validate(schedule.*)'],
+      _scheduleJob(){
+        console.log('schedule this job: ', this.schedule);
+      },
+      validate(changeRecord){
+        var result = true;
+        //Check if we have all the fields we need
+        this._setValid(result);
+      }
+    });
+  </script>
+</dom-module>

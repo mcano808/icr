@@ -1,0 +1,130 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="mock-templates">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'mock-templates',
+      properties:{
+        datasources:{
+          type:Array,
+          notify: true,
+          readOnly: true,
+          value:function(){
+            return [{
+              name: 'URL to CSV',
+              description:'This is the description of hitting a RESTFul URL with data in CSV format and ingesting it.',
+              configFields:[{
+                _type:'input',
+                label:'URL',
+                id:'_internal_url',
+                value:''
+              },{
+                _type:'input',
+                label:'User Name',
+                id:'_internal_user_name',
+                value:''
+              },{
+                _type:'input',
+                label:'Password',
+                id:'_internal_user_password',
+                value:''
+              },{
+                _type:'input',
+                label:'Cert Path',
+                id:'_internal_user_cert_path',
+                value:''
+              },{
+                _type:'url_test_btn',
+                value:''
+              },{
+                _type:'cron_control',
+                value:{min:'', hr:'', dom:'', moy:'', dow:'', year:''}
+              },{
+                  _type:'select',
+                  options:[{
+                    label:'Option 1',
+                    value :'opt1'
+                  },{
+                    label:'Option 2',
+                    value:'opt2'
+                  },{
+                    label:'Option 3',
+                    value:'opt3'
+                  }],
+                  value:'opt3'
+              },{
+                _type:'boolean',
+                label:'Am I real',
+                id:'_internal_is_true',
+                value: false
+              }]
+            },{
+              name: 'URL to XML',
+              description:'This is the description of hitting a RESTFul URL with data in XML format and ingesting it.',
+              configFields: {}
+            },{
+              name: 'URL to JSON',
+              description:'This is the description of hitting a RESTFul URL with data in JSON format and ingesting it.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'File Dump Ingest',
+              description:'This is the description of how we take a file dump from a specified location and ingest it.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 5',
+              description:'This is the description of Template 5.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 6',
+              description:'This is the description of Template 6.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 7',
+              description:'This is the description of Template 7.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 8',
+              description:'This is the description of Template 8.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 9',
+              description:'This is the description of Template 9.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 10',
+              description:'This is the description of Template 10.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 11',
+              description:'This is the description of Template 11.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 12',
+              description:'This is the description of Template 12.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 13',
+              description:'This is the description of Template 13.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 14',
+              description:'This is the description of Template 14.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },{
+              name: 'Template 15',
+              description:'This is the description of Template 15.',
+              configFields:[{_type:'input',label:'Something', id:'_internal_name' }]
+            },]
+          }
+        }
+      },
+    });
+  </script>
+</dom-module>

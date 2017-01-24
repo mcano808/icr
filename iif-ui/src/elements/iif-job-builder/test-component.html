@@ -1,0 +1,43 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animatable.html">
+<link rel="import" href="../../../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
+<dom-module id="test-component">
+  <template>
+    <style inlcude="iron-flex iron-positioning">
+      :host {
+        display: block;
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
+      }
+      neon-animated-pages{
+        @apply(--layout-flex);
+      }
+      neon-animatable {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+      }
+    </style>
+    <div>
+      <paper-tabs selected="{{selectedOption}}" fit-container>
+        <paper-tab>TAB 1</paper-tab>
+        <paper-tab>TAB 2</paper-tab>
+        <paper-tab>TAB 3</paper-tab>
+      </paper-tabs>
+    </div>
+    <neon-animated-pages selected="{{selectedOption}}">
+      <neon-animatable>0</neon-animatable>
+      <neon-animatable>1</neon-animatable>
+      <neon-animatable>2</neon-animatable>
+      <neon-animatable>3</neon-animatable>
+    </neon-animated-pages>
+  </template>
+  <script>
+    Polymer({
+      is: 'test-component'
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,108 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../icr-ingest-job-configuration-fields/icr-ingest-url-field.html">
+
+
+<dom-module id="iif-job-configuration">,
+  <template>
+    <style include="iron-flex">
+      :host {
+        display: block;
+      }
+    </style>
+    <div id="dynamicForm" class="vertical layout flex"></div>
+  </template>
+  <script>
+    Polymer({
+      is: 'iif-job-configuration',
+      properties:{
+        selectedTemplate:{
+          type:Object,
+          notify: true,
+          observer:'_selectedTemplateChanged'
+        }
+      },
+      _makeElement (jobProperty){
+        let element= null;
+        switch (jobProperty.type) {
+          case 'STRING':
+          case 'INTEGER':
+          case 'DECIMAL':
+            //Create the element
+            element=  document.createElement("paper-input");
+            //Set it's attributes
+            element.setAttribute('label', jobProperty.name);
+            element.setAttribute('name', jobProperty.name);
+            //Only do this if its a DECIMAL dataType
+            if(jobProperty.dataType === 'DECIMAL') {
+              element.setAttribute('allowed-pattern', '[0-9]');
+              element.setAttribute('auto-validate', true);
+            }
+            //Set required proper so we can get some basic error checking.
+            if(jobProperty.required) element.setAttribute('required', true);
+            if(jobProperty.defaultValue) element.setAttribute('value',jobProperty.defaultValue);
+            //Add event listener so I can update the value in the config object.
+            element.addEventListener('input', (event)=>{
+              jobProperty.value = event.srcElement.value;
+            });
+            //TODO have to bind value on this to something to track value.
+            //Add the id to an object then add listener to this el that updates that key in the object.
+          break;
+          case 'url_test_btn':
+            element = document.createElement("icr-ingest-url-field");
+            //TODO Adde even listener to get the change in data sample and if url is valid
+          break;
+          case 'cron_control':
+            //Create element
+
+            //Set attributes
+
+            //Add event listeners to update object
+          break;
+          case 'SELECT':
+
+
+            break;
+          case 'BOOLEAN':
+            element = document.createElement("paper-checkbox");
+            element.innerHTML = jobProperty.label;
+            element.setAttribute('name', jobProperty.id);
+            if(jobProperty.required) element.setAttribute('required', true);
+            element.addEventListener('change',(event)=>{
+              jobProperty.value = event.srcElement.checked;
+            });
+            break;
+        }
+        return element
+      },
+      _makeForm(jobProperties){
+        let elToAdd = null;
+        this.$.dynamicForm.innerHTML = '';
+        //Solution for dynamically adding components and binding them based on:
+        //http://stackoverflow.com/questions/30615549/data-binding-in-a-dynamically-inserted-polymer-element
+        if(jobProperties.length > 0){
+          for (var idx = 0; idx < jobProperties.length; idx ++){
+            //find out what element to make
+            elToAdd =this. _makeElement(jobProperties[idx]);
+            //Make sure this is not null before adding in
+            if(elToAdd !== null){
+              this.$.dynamicForm.appendChild(elToAdd);
+            }else{
+              console.warn('got a null el: ', jobProperties[idx]);
+            }
+          }
+        }else{
+          //Nothing to do but clear the
+        }
+
+      },
+      _selectedTemplateChanged (newSelection, oldSelection){
+        if(newSelection.jobProperties !== undefined){
+          this._makeForm(newSelection.jobProperties);
+        };
+      }
+    });
+  </script>
+</dom-module>

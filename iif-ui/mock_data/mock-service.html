@@ -1,0 +1,172 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="mock-services">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'mock-service',
+      properties:{
+        failed:{
+          type: Boolean,
+          notify: true,
+          value: false
+        },
+        jobs:{
+          type:Array,
+          notify: true,
+          value:()=>{
+            return [{
+              "name": "REST to ElasticSearch",
+              "description": "A job to ingest data from a restful URL into elasticsearch",
+              "jobProperties": [
+                {
+                  "name": "Schedule",
+                  "description": "The schedule in which the job will run",
+                  "required": true,
+                  "type": "STRING",
+                  "group": "Group A",
+                  "defaultValue": "0 0 *"
+                },
+                {
+                  "name": "URL",
+                  "description": "the url from which to acquire data",
+                  "required": true,
+                  "type": "INTEGER",
+                  "group": "Group A",
+                  "defaultValue": "https://my.stuff.com"
+                }
+              ],
+              "dataSource": null,
+              "_links": {
+                "self": {
+                  "href": "http://icr-server-1:8090/jobs/5876af95bb3e823332953f93"
+                },
+                "job": {
+                  "href": "http://icr-server-1:8090/jobs/5876af95bb3e823332953f93"
+                }
+              }
+            },
+            {
+              "name": "RESTCSV to ElasticSearch",
+              "description": "A job to ingest data from a restful csv data into elasticsearch",
+              "jobProperties": [
+                {
+                  "name": "Schedule",
+                  "description": "The schedule in which the job will run",
+                  "required": true,
+                  "type": "STRING",
+                  "group": "Group A",
+                  "defaultValue": "0 0 *"
+                },
+                {
+                  "name": "URL",
+                  "description": "the url from which to acquire data",
+                  "required": true,
+                  "type": "INTEGER",
+                  "group": "Group A",
+                  "defaultValue": "https://my.stuff.com"
+                },
+                {
+                  "name": "Csv Impl",
+                  "description": "csvImpl to use",
+                  "required": false,
+                  "type": "STRING",
+                  "group": "Group B",
+                  "defaultValue": "com.icr.csv.Impl.class"
+                }
+              ],
+              "dataSource": null,
+              "_links": {
+                "self": {
+                  "href": "http://icr-server-1:8090/jobs/5876b08fbb3e823332953f94"
+                },
+                "job": {
+                  "href": "http://icr-server-1:8090/jobs/5876b08fbb3e823332953f94"
+                }
+              }
+            }]
+          }
+        },
+        dataTypes:{
+          type:Array,
+          notify:true,
+          value:()=>{
+            return ['STRING', 'INTEGER', 'DECIMAL', ];
+          }
+        },
+        attributeTypes:{
+          type: Array,
+          notify: true,
+          value:()=>{
+            return[{
+              name:'LAT',
+              description:'This is a latitude.',
+              dataType:'DECIMAL'
+            },{
+              name:'LON',
+              description:'This is a longitude.',
+              dataType:'DECIMAL'
+            },{
+              name:'URL',
+              description:'This is a url.',
+              dataType:'STRING'
+            },{
+              name:'FREQ',
+              description:'This is a freq in MHz.',
+              dataType:'INTEGER'
+            },{
+              name:'OTHER',
+              description:'This is any other field.',
+              dataType:'STRING'
+            }]
+          }
+        },
+        formatters:{
+          type: Array,
+          notify: true,
+          value:()=>{
+            return [{
+              name: 'DateTransformer',
+              properties: {
+                formatString: 'yyyy-MM-dd HH:mm:SS'
+              }
+            },{
+              name:'Only Month',
+              properties:{
+                formatString: 'yyyy'
+              }
+            }];
+          }
+        },
+        transformers:{
+          type: Array,
+          notify: true,
+          value:()=>{
+            return [{
+              name: 'ArithmeticTransformer',
+              properties: {
+                operation: '* 1000'
+              }
+            },
+            {
+              name: 'RegexTransformer',
+              properties: {
+                search: '.*',
+                replace: 'stuff'
+              }
+            }];
+          }
+        }
+      },
+      setFailed(value){
+        this.failed = value;
+      }
+    });
+  </script>
+</dom-module>

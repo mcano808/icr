@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../../bower_components/polymer/polymer.html">
+    <link rel="import" href="./icr-datasource-card.html">
+    <link rel="import" href="../../../mock_data/mock-datasources.html">
+    <title>Card view Test</title>
+  </head>
+  <body>
+    <h1>Test</h1>
+    <template is="dom-bind" id="t">
+      Hello: {{name}}
+      <hr>
+      Single card
+    </br>
+    <icr-datasource-card item="{{singleCardInfo}}"></icr-datasource-card>
+    </template>
+
+    <script>
+      let t= document.querySelector('#t');
+      t.addEventListener('dom-change', ()=>{
+        console.log('dom chamged');
+        t.name = 'mike';
+        t.singleCardInfo = {
+          dsName: 'Datasource Name 1',
+          runs:[{
+            date: 1482418699044,
+            duration:12345646,
+            results:1473,
+            status:'finished'
+          },{
+            date: 1482417699044,
+            duration:12345646,
+            results:1473,
+            status:'new'
+          },{
+            date: 1482418721524,
+            duration:12345646,
+            results:1473,
+            status:'running'
+          }]
+        };
+      });
+    </script>
+  </body>
+</html>

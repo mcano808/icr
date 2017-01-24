@@ -1,0 +1,78 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../icr-ingest-behaviors/baseUrlBehavior.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="service-datatypes">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+    <iron-ajax
+      id="ia"
+      auto
+      url="{{fullUrl}}"
+      handle-as="json"
+      on-response="handleResponse"
+      on-error="handleError"
+      debounce-duration="500"
+      loading="{{loading}}"></iron-ajax>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'service-datatypes',
+      behaviors:[icrBehaviors.baseUrl],
+      properties:{
+        error:{
+          type: Object,
+          readOnly: true,
+          notify: true
+        },
+        endPoint:{
+          type: String,
+          notify: true,
+          readOnly: true,
+          value: '/discover/dataTypes'
+        },
+        failed:{
+          type:Boolean,
+          notify: true,
+          value: false
+        },
+        fullUrl:{
+          type: String,
+          computed:'_makeFullUrl(baseUrl, endPoint)'
+        },
+        dataTypes:{
+          type: Array,
+          notify: true,
+          readOnly:true,
+          value:()=>{return [];}
+        },
+        loading:{
+          type:Boolean,
+          readOnly: true,
+          notify: true
+        }
+      },
+      _getDataTypes(){
+        this.$.ia.generateRequest();
+      },
+      _makeFullUrl(baseUrl, endPoint){
+        console.log('making the full url:', arguments);
+        return baseUrl + endPoint;
+      },
+      handleError(error){
+        console.warn('DATATYPES error: ', error);
+        this._setError(error);
+        this.failed = true;
+      },
+      handleResponse(data){
+        console.info('DATATYPES response: ', data.detail.response._embedded.dataTypes);
+        this._setDataTypes(data.detail.response._embedded.dataTypes);
+        this.failed = false;
+      }
+    });
+  </script>
+</dom-module>

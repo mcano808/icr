@@ -1,0 +1,25 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="mock-data-types">
+  <template>
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+  </template>
+  <script>
+    Polymer({
+      is: 'mock-data-types',
+      properties:{
+        dataTypes:{
+          type: Array,
+          readOnly: true,
+          notify: true,
+          value:()=>{
+            return ['DECIMAL', 'INTEGER', 'STRING']
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>

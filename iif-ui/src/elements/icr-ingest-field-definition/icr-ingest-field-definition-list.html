@@ -1,0 +1,81 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="./icr-ingest-field-definition-item.html">
+<link rel="import" href="../icr-ingest-behaviors/icr-ingest-field-definition.html">
+<dom-module id="iff-attribute-definition-list">
+  <template>
+    <style include="iron-flex">
+      :host {
+        display: block;
+      }
+      paper-button span{
+        text-transform: none;
+      }
+    </style>
+    <div class="vertical layout flex">
+      <template is="dom-repeat" items="{{attributeMappings}}" index-as="index">
+        <icr-ingest-field-definition-item field="{{item}}"></icr-ingest-field-definition-item>
+      </template>
+    </div>
+    <div class="horizontal layout">
+      <paper-button class="flex" on-tap="_addNewFieldDefinition">
+        <iron-icon icon="add"></iron-icon>
+        <span class="flex">Add a field...</span>
+      </paper-button>
+
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'icr-ingest-field-definition-list',
+      behaviors:[icrBehaviors.fieldDefinition],
+      properties:{
+        attributeMappings:{
+          type:Array,
+          notify: true,
+          observer:'_attributeMappingsChanged'
+        },
+        fieldValidation:{
+          type: Array,
+          notify: true,
+          value: ()=>{
+            return [];
+          }
+        },
+        errors:{
+          type:Array,
+          notify: true,
+          value:()=>{return [];}
+        },
+        hasErrors:{
+          type: Boolean,
+          notify: true,
+          computed:'_computeHasErrors(errors.length)'
+        }
+      },
+      _addNewFieldDefinition(){
+        //Use method from behavior to create consisten data model.
+        let newFD = this.newFieldDefinition();
+        //Push the validation ref to a field's validation.
+        this.push('fieldValidation', newFD.valid);
+        this.push('attributeMappings', newFD);
+      },
+      _attributeMappingsChanged(newMappings, oldMappings){
+        console.info('attribute mapings changed: ', arguments);
+        //We do this as when a blank template is passed in this attribute is missing.
+        //If it's not missing then we continue processing it.
+        if(newMappings === undefined)this.set('attributeMappings',[]);
+      },
+      _computeHasErrors(newLength, oldLength){
+        if(newLength > 0){
+          return false
+        }else{
+          return true;
+        }
+      }
+    });
+  </script>
+</dom-module>

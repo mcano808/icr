@@ -1,0 +1,116 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+
+<!--  Mock Data components-->
+<link rel="import" href="../../../mock_data/mock-service.html">
+
+<dom-module id="iif-field-definition-transformer">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+      }
+    </style>
+    <mock-service transformers="{{transformersOptions}}"></mock-service>
+    <div class="vertical layout">
+      <!--  List of selected transformer-->
+      <div role="listbox">
+        <template is="dom-repeat" items="{{transformers}}" index-as="index">
+          <paper-item>
+            <span class="flex">{{item.name}}</span>
+            <paper-icon-button icon="clear" on-tap="removeTransformer"></paper-icon-button>
+          </paper-item>
+        </template>
+      </div>
+      <div class="horizontal layout end">
+        <!--  Transformer Options List-->
+        <paper-dropdown-menu class="flex" label="Transformer">
+          <paper-listbox  id="transformerOptionsList"class="dropdown-content flex">
+            <template is="dom-repeat" items="{{transformerOptions}}" index-as="index">
+              <paper-item class="flex" on-tap="_selectTransformer">{{item.name}}</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+        <paper-icon-button id="addTransformerTrigger" on-tap="addTransformer" disabled icon="add"></paper-icon-button>
+      </div>
+      <!--  Section for additional text fields -->
+      <template is="dom-repeat" items="{{selectedTransformerPropertyList}}" index-as="index">
+        <paper-input label="{{item}}" on-value-changed="setInputValue"></paper-input>
+      </template>
+    </div>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'iif-field-definition-transformer',
+      properties:{
+        selectedTransformerPropertyList:{
+          type: Array,
+          notify: true,
+          value:()=>{return [];}
+        },
+        transformerOptions:{
+          type:Array,
+          notify: true
+        },
+        transformerToAdd:{
+          type:Object,
+          notify: true,
+          observer:'_transformerToAddChanged'
+        },
+        transformers:{
+          type:Array,
+          notify: true,
+          value:() => {return [];}
+        }
+      },
+      observers:['_enableAddTransformer(transformerToAdd.*)'],
+      _enableAddTransformer(changeRecord){
+        this.$.addTransformerTrigger.disabled = false;
+      },
+      _selectTransformer(event){
+        //We don't use "set" here because when picking the same transfomer again makes change deteciton NOT fire.
+        this.transformerToAdd = event.model.item;
+
+      },
+      setInputValue(event){
+        //Debounce so we don't get nuts when typing.
+        this.debounce('updateInputValue', function(){
+          let key = event.model.item;
+          let value = event.detail.value;
+          this.set('transformerToAdd.properties.'+ key, value);
+        }, 300);
+      },
+      _transformerToAddChanged(newTransformer, oldTransformer){
+        //Set up the options list based on new transformer.properties
+        let keyArray;
+        if(newTransformer.properties === undefined || newTransformer.properties === null) return;
+        keyArray = Object.keys(newTransformer.properties);
+        if(keyArray.length > 0){
+          //we have properties
+          this.selectedTransformerPropertyList = keyArray;
+        }else{
+          //No properties, just clear list
+          this.selectedTransformerPropertyList = [];
+        }
+      },
+      addTransformer(){
+        this.push('transformers', this.transformerToAdd);
+        //Clear the fields
+        this.selectedTransformerPropertyList = [];
+        //reset the selection controls
+        this.$.transformerOptionsList.selected = null;
+        this.set('transformerToAdd', {});
+      },
+      removeTransformer(event){
+        this.splice('transformers', event.model.index, 1);
+      }
+    });
+  </script>
+</dom-module>
