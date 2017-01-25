@@ -31,6 +31,7 @@
       }
       neon-animated-pages{
         @apply(--layout-flex);
+        margin: 0 8px;
       }
       neon-animatable {
         @apply(--layout-horizontal);
@@ -105,12 +106,12 @@
         <neon-animatable>
           <div class="vertical layout flex">
             <template is="dom-if" if="{{listHasErrors}}" restamp="true">
-              <div class="horizontal layout flex">
+              <div class="horizontal layout">
                 <p>Errors here</p>
               </div>
             </template>
-            <paper-input label="Name..." value="{{jobName}}" class="flex"></paper-input>
-            <paper-input label="Description..." value="{{jobDescription}}" class="flex"></paper-input>
+            <paper-input label="Name..." value="{{jobName}}"></paper-input>
+            <paper-input label="Description..." value="{{jobDescription}}"></paper-input>
             <paper-button raised>Load Sample</paper-button>
             <iif-attribute-definition-list
               class="flex"
