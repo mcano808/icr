@@ -12,7 +12,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>icr-common</module>
-		<module>icr-ingest-app</module>
 		<module>icr-ingest</module>
 	</modules>
 	<properties>

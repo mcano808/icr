@@ -7,4 +7,7 @@
   </parent>
   <artifactId>icr-ingest</artifactId>
   <packaging>pom</packaging>
+  <modules>
+		<module>icr-ingest-app</module>
+	</modules>
 </project>
