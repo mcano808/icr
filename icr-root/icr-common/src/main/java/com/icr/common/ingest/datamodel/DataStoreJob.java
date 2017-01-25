@@ -15,8 +15,9 @@ public class DataStoreJob
     private String name;
     private String description;
     private List<JobProperty> jobProperties = new ArrayList<>();
+    private String groupId;
     private String dataSourceId;
-    private boolean active;
+    private int state;
 
     public String getName()
     {
@@ -43,6 +44,16 @@ public class DataStoreJob
         return dataSourceId;
     }
 
+    public String getGroupId()
+    {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId)
+    {
+        this.groupId = groupId;
+    }
+
     public void setDataSourceId(String dataSourceId)
     {
         this.dataSourceId = dataSourceId;
@@ -58,14 +69,22 @@ public class DataStoreJob
         return jobProperties;
     }
 
-    public boolean isActive()
+    /**
+     * A Bitmask represented by {@link JobStates}
+     * @return
+     */
+    public int getState()
     {
-        return active;
+        return state;
     }
 
-    public void setActive(boolean active)
+    /**
+     * Set as a bit mask of {@link JobStates}
+     * @param state
+     */
+    public void setState(int state)
     {
-        this.active = active;
+        this.state = state;
     }
 
 }
