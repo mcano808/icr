@@ -1,7 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 <link rel="import" href="../icr-ingest-behaviors/baseUrlBehavior.html">
 <link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
-<dom-module id="service-ingest-jobs">
+<dom-module id="service-datastore-jobs">
   <template>
     <style>
       :host {
@@ -21,8 +21,8 @@
   </template>
   <script>
     Polymer({
-      is: 'service-ingest-jobs',
-      behaviors:[icrBehaviors.baseUrl],
+      is: 'service-datastore-jobs',
+      behaviors:[iifBehaviors.baseUrl],
       properties:{
         error:{
           type: Object,
@@ -33,7 +33,7 @@
           type: String,
           notify: true,
           readOnly: true,
-          value: '/discover/ingestJobs'
+          value: '/discover/dataStoreJobs'
         },
         failed:{
           type:Boolean,
@@ -44,7 +44,7 @@
           type: String,
           computed:'_makeFullUrl(baseUrl, endPoint)'
         },
-        ingestJobs:{
+        dataStoreJobs:{
           type: Array,
           notify: true,
           value:()=>{return [];}
@@ -56,6 +56,7 @@
         }
       },
       _makeFullUrl(baseUrl, endPoint){
+        console.log('making the full url:', arguments);
         return baseUrl + endPoint;
       },
       getJobs(){
@@ -63,18 +64,12 @@
       },
       handleError(error){
         console.warn('JOBS error: ', arguments);
-        this._setError(error);
+        this._setError(error)
         this.failed = true;
       },
       handleResponse(data){
-        // var jobs = data.detail.response._embedded.ingestJobs
-        // let job;
-        // for (var i = 0; i < jobs.length; i++){
-        //   job = jobs[i];
-        //   console.log('adding new job: ', job);
-        //   this.push('ingestJobs', job);
-        // }
-        this.ingestJobs = data.detail.response._embedded.ingestJobs;
+        console.info('JOBS response: ', data.detail.response._embedded.dataStoreJobs);
+        this.jobs = data.detail.response._embedded.dataStoreJobs;
         this.failed = false;
       }
     });
