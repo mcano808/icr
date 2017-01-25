@@ -8,6 +8,9 @@
 	</parent>
 	<artifactId>icr-ingest</artifactId>
 	<packaging>pom</packaging>
+	<properties>
+		<icr-ingest-common.version>1.0.0-SNAPSHOT</icr-ingest-common.version>
+	</properties>
 	<modules>
 		<module>icr-ingest-common</module>
 		<module>icr-ingest-app</module>
@@ -19,6 +22,11 @@
 				<groupId>com.icr</groupId>
 				<artifactId>icr-common</artifactId>
 				<version>${icr-common.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.icr</groupId>
+				<artifactId>icr-ingest-common</artifactId>
+				<version>${icr-ingest-common.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

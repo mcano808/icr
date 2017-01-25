@@ -9,14 +9,19 @@
 	<artifactId>icr-ingest-app</artifactId>
 	<packaging>war</packaging>
 	<dependencies>
+		<!-- Common Stuff -->
+		<dependency>
+			<groupId>com.icr</groupId>
+			<artifactId>icr-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.icr</groupId>
+			<artifactId>icr-ingest-common</artifactId>
+		</dependency>
 		<!-- Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -27,15 +32,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.icr</groupId>
-			<artifactId>icr-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.icr</groupId>
-			<artifactId>icr-ingest-common</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -69,11 +65,9 @@
 			<artifactId>avro</artifactId>
 		</dependency>
 		<!-- Jackson AVRO dependency -->
-		<!-- <dependency>
-			<groupId>com.fasterxml.jackson.dataformat</groupId>
-			<artifactId>jackson-dataformat-avro</artifactId>
-		</dependency> -->
-	</dependencies>	
+		<!-- <dependency> <groupId>com.fasterxml.jackson.dataformat</groupId> <artifactId>jackson-dataformat-avro</artifactId> 
+			</dependency> -->
+	</dependencies>
 
 	<build>
 		<resources>
