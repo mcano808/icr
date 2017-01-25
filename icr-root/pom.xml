@@ -13,6 +13,7 @@
 	<modules>
 		<module>icr-common</module>
 		<module>icr-ingest-app</module>
+		<module>icr-ingest</module>
 	</modules>
 	<properties>
 		<icr-common.version>1.0.0-SNAPSHOT</icr-common.version>
