@@ -14,6 +14,7 @@
 	<modules>
 		<module>icr-ingest-common</module>
 		<module>icr-ingest-app</module>
+		<module>icr-ingest-scripts</module>
 	</modules>
 
 	<dependencyManagement>
