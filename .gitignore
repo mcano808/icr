@@ -1,3 +1,4 @@
 /.project
 */.idea/
 /iif-ui/bower_components/
+*.iml
