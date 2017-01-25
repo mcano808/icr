@@ -7,7 +7,7 @@
 <link rel="import" href="./iif-attribute-definition-item.html">
 <dom-module id="iif-attribute-definition-list">
   <template>
-    <style include="iron-flex">
+    <style include="iron-flex iron-flex-alignment">
       :host {
         display: block;
       }
@@ -17,7 +17,12 @@
     </style>
     <div class="vertical layout flex">
       <template is="dom-repeat" items="{{attributeMappings}}" index-as="index">
-        <iif-attribute-definition-item field="{{item}}"></iif-attribute-definition-item>
+        <div class="horizontal layout end">
+          <iif-attribute-definition-item class="flex" field="{{item}}"></iif-attribute-definition-item>
+          <paper-button on-tap="_removeRow">
+            <iron-icon icon="cancel"></iron-icon>
+          </paper-button>
+        </div>
       </template>
     </div>
     <div class="horizontal layout">
@@ -57,6 +62,7 @@
         }
       },
       _addNewFieldDefinition(){
+        //TODO Make sure this has an attributeMappings set.  If not then direct back to template selection.
         //Use method from behavior to create consisten data model.
         let newFD = this.newFieldDefinition();
         //Push the validation ref to a field's validation.
@@ -75,6 +81,10 @@
         }else{
           return true;
         }
+      },
+      _removeRow(event){
+        console.info('removing this row: ', event);
+        this.splice('attributeMappings', event.model.index, 1);
       }
     });
   </script>
