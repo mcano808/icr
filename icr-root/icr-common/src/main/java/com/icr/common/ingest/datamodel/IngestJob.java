@@ -17,7 +17,8 @@ public class IngestJob
     private String description;
     private List<JobProperty> jobProperties = new ArrayList<>();
     private String dataSourceId;
-    private boolean active;
+    private String groupId;
+    private int state;
 
     public String getId()
     {
@@ -67,16 +68,36 @@ public class IngestJob
     public List<JobProperty> getJobProperties()
     {
         return jobProperties;
+    }  
+
+    public String getGroupId()
+    {
+        return groupId;
     }
 
-    public boolean isActive()
+    public void setGroupId(String groupId)
     {
-        return active;
+        this.groupId = groupId;
     }
 
-    public void setActive(boolean active)
+    /**
+     * A Bitmask represented by {@link JobStates}
+     * @return
+     */
+    public int getState()
     {
-        this.active = active;
+        return state;
     }
+
+    /**
+     * Set as a bit mask of {@link JobStates}
+     * @param state
+     */
+    public void setState(int state)
+    {
+        this.state = state;
+    }
+
+   
 
 }
