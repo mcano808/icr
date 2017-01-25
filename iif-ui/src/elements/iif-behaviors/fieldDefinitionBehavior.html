@@ -1,6 +1,6 @@
 <script>
 //Initialize the object if its not alread there.
-var icrBehaviors = icrBehaviors || {};
+var iifBehaviors = iifBehaviors || {};
 
 //Define this particular behavior.
 /**
@@ -9,14 +9,20 @@ var icrBehaviors = icrBehaviors || {};
  * the proper data structure.  If we need to make a change to the structure, we
  * can make it here.
  */
-icrBehaviors.baseUrl = {
-  properties:{
-    baseUrl:{
-      type: String,
-      readOnly: true,
-      notify: true,
-      value: 'http://icr-server-1:8090/icr'
-    }
+iifBehaviors.fieldDefinition = {
+  properties:{},
+  newFieldDefinition(){
+    return {
+      originalAttribute:'',
+      newAttribute:'',
+      attributeType:this.newAttributeType(),
+      dataType:'',
+      formatters:[],
+      transformers:[]
+    };
+  },
+  newAttributeType(){
+    return {name:'', description:''};
   }
 }
 </script>
