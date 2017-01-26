@@ -1,0 +1,251 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<!--  Mock data components-->
+
+<link rel="import" href="../../../mock_data/mock-service.html">
+<link rel="import" href="./iif-field-definition-formatter.html">
+<link rel="import" href="./iif-field-definition-transformer.html">
+<link rel="import" href="./iif-field-definition-attributes.html">
+
+<dom-module id="iif-attribute-calculated-item">
+  <template>
+    <style include="iron-flex iron-flex-alignment">
+      :host {
+        display: block;
+      }
+      #indicator{
+        min-width: 20px;
+        margin-left: -12px;
+      }
+      .good{
+        color: darkgreen;
+      }
+
+      .bad{
+        color: darkred;
+      }
+      .field{
+        padding: 0 8px;
+      }
+
+    </style>
+
+    <!--  Mock data components  -->
+    <mock-service
+      attribute-types="{{attributeTypes}}"
+      data-types="{{dataTypes}}"
+      transformers="{{transformerOptions}}"></mock-service>
+
+    <div class="horizontal layout end">
+      <!--  Row Validation icons-->
+      <template is="dom-if" if="{{valid}}" restamp="true">
+        <paper-icon-button class="good" icon="check"></paper-icon-button>
+      </template>
+      <template is="dom-if" if="{{!valid}}" restamp="true">
+        <paper-icon-button class="bad" icon="error-outline"></paper-icon-button>
+      </template>
+      <!--  incoming and outgoing names-->
+      <paper-input class="field"
+        label="Original Attribute"
+        id="originalAttribute"
+        required
+        auto-validate
+        value="{{field.originalAttribute}}"></paper-input>
+      <paper-input class="field"
+        label="New Attribute"
+        id="newAttribute"
+        required
+        auto-validate
+        value="{{field.newAttribute}}"></paper-input>
+       <!--  Attribute Type selection-->
+      <paper-dropdown-menu class="field"  label="Attribute Type">
+        <paper-listbox
+          id="attributeType"
+          class="dropdown-content"
+          selected="{{field.attributeType.name}}"
+          attr-for-selected="value">
+          <template is="dom-repeat" items="{{attributeTypes}}" index-as="index">
+            <paper-item
+              on-tap="_setAttributeType"
+              value="{{item.name}}">[[item.name]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
+      <!--  Data Type selection-->
+      <paper-dropdown-menu id="dataType" class="field" label="Data Type">
+        <paper-listbox class="dropdown-content"
+          id="dataTypeListBox"
+          selected="{{field.attributeType.dataType}}"
+          attr-for-selected="value">
+          <template is="dom-repeat" items="{{dataTypes}}" index-as="index">
+            <paper-item
+              value="{{item}}"
+              on-tap="_setDataType">[[item]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
+      <!--  Additional functionality -->
+      <div class="horizontal layout flex">
+        <span class="flex">
+          <!--  Placeholder to push out the rest of the controls-->
+        </span>
+        <paper-icon-button class=""
+          id="formatterTrigger"
+          icon="text-format"
+          on-tap="showStringFormatter"></paper-icon-button>
+        <paper-icon-button class=""
+          id="transformerTrigger"
+          icon="swap-horiz"
+          on-tap="showTransformer"></paper-icon-button>
+        <paper-icon-button class=""
+          icon="view-list"
+          id="attributesTrigger"
+          on-tap="showAttributes"></paper-icon-button>
+      </div>
+      <!-- Dialogs for this row -->
+      <paper-dialog id="attributesDialog">
+        <h2> Additional Attributes</h2>
+        <iif-field-definition-attributes attributes="{{field.attributes}}"></iif-field-definition-attributes>
+      </paper-dialog>
+      <paper-dialog id="formatStringDialog">
+        <h2>String Formatters</h2>
+        <iif-field-definition-formatter formatters="{{field.formatters}}"></iif-field-definition-formatter>
+      </paper-dialog>
+      <paper-dialog id="transformerDialog">
+        <h2>Transformer</h2>
+        <iif-field-definition-transformer transformer-options="{{transformerOptions}}" transformers="{{field.transformers}}"></iif-field-definition-transformer>
+      </paper-dailog>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'iif-attribute-calculated-item',
+      properties:{
+        field:{
+          type:Object,
+          notify: true
+        },
+        attributeTypes:{
+          type:Array,
+          notify: true
+        },
+        dataTypes:{
+          type:Array,
+          notify: true
+        },
+        knownAttributes:{
+          type: Array,
+          notify: true
+        },
+        selectedType:{
+          type:Object,
+          notify: true
+        },
+        valid:{
+          type:Boolean,
+          notify: true
+        },
+        newField:{
+          type: Boolean,
+          value: true
+        }
+      },
+      observers:[
+        'validate(field.*)',
+        '_fieldAttributesChanged(field.attributes.*)',
+        '_fieldFormattersChanged(field.formatters.*)',
+        '_fieldTransformersChanged(field.transformers.*)'
+      ],
+      _fieldAttributesChanged(changeRecord){
+        var changeClass = true;
+        if(changeRecord.base === undefined) return;
+        if(changeRecord.base.length < 1){
+          changeClass = false;
+        }
+        this.$.attributesTrigger.toggleClass('good', changeClass);
+      },
+      _fieldFormattersChanged(changeRecord){
+        var changeClass = true;
+        if(changeRecord.base.length < 1){
+          changeClass = false
+        }
+        this.$.formatterTrigger.toggleClass('good', changeClass);
+      },
+      _fieldTransformersChanged(changeRecord){
+        var changeClass = true;
+        if(changeRecord.base.length < 1){
+          changeClass = false;
+        }
+        this.$.transformerTrigger.toggleClass('good', changeClass);
+      },
+      _setAttributeType(event){
+        let model = event.model.item;
+        this.set('field.attributeType', model);
+        //Set the dataType if it has one.
+        if(model.dataType && model.dataType.length > 0 ){
+          //Disable some controls unless its type "Other".
+          if(model.name.toLowerCase() === "other"){
+            //Enable/disable controls
+            this.$.newAttribute.disabled = false;
+            this.$.dataType.disabled = false;
+            //Set field values
+            this.set('field.attributeType.dataType', model.dataType);
+            this.set('field.newAttribute', '');
+          }else{
+            //Enable/disable controls
+            this.$.newAttribute.disabled = true;
+            this.$.dataType.disabled = true;
+            //Set field values
+            this.set('field.newAttribute', model.name);
+            this.set('field.attributeType.dataType', model.dataType);
+          }
+        }
+      },
+      _setDataType(event){
+        this.set('field.attributeType.dataType', event.model.item);
+        //Autoset attributeType to "OTHER"
+        this.$.attributeType.select('OTHER');
+      },
+      showAttributes(event){
+        this.$.attributesDialog.open();
+      },
+      showStringFormatter(event){
+        this.$.formatStringDialog.open();
+      },
+      showTransformer(event){
+        this.$.transformerDialog.open();
+      },
+      validate(changeRec){
+        //Will always be checked when first created- don't validate yet.
+        if(this.newField){
+          this.set('newField', false);
+          return;
+        }
+        // debounce this so that we aren't doing this for every keystroke.
+        this.debounce('validateDebounce',function(){
+          let result = true;
+          let base = changeRec.base;
+          //Rule set
+          if(base.newAttribute === undefined || base.newAttribute.length < 1) result = false;
+          if(base.originalAttribute === undefined || base.originalAttribute.length < 1) result = false;
+          if(base.attributeType === undefined || base.attributeType.name.length < 1) result = false;
+          if(base.attributeType.dataType === undefined || base.attributeType.dataType.length < 1) result = false;
+          //TODO Should make sure the newAttribute value is not one of the attributeType names.
+          //set "valid" attribute on the field
+          this.set('valid', result);
+        }, 500)
+
+      }
+    });
+  </script>
+</dom-module>

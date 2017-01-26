@@ -9,6 +9,8 @@
     <link rel="import" href="iif-field-definition-transformer.html">
     <link rel="import" href="./iif-field-definition-attributes.html">
     <link rel="import" href="./iif-attribute-definition-list.html">
+    <link rel="import" href="./iif-attribute-calculated-list.html">
+
   </head>
   <body style="height:100%">
     <template is="dom-bind" id="t">
@@ -21,6 +23,8 @@
       <iif-attribute-definition-list
         attribute-mappings="{{selectedTemplate.attributeMappings}}">
       </iif-attribute-definition-list>
+      <h1>Calculated Field</h1>
+      <iif-attribute-calculated-item field="{{sampleCalcField}}"></iif-attribute-calculated-item>
 
     </template>
     <script>
