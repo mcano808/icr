@@ -31,17 +31,20 @@
         --paper-item-selected:{
           background-color: var(--primary-background-color);
         }
+        --paper-listbox-background-color:var(--dark-primary-color);
+        --paper-dialog-background-color: var(--dark-primary-color);
       }
       neon-animated-pages{
         @apply(--layout-flex);
         /*margin: 0 8px;*/
       }
+
       neon-animatable {
         @apply(--layout-horizontal);
       }
-      paper-listbox{
-        --paper-listbox-background-color:var(--default-primary-color);
-      }
+      /*#templateList{
+        --paper-listbox-background-color:var(--dark-primary-color);
+      }*/
       #configurationControls{
         padding-left: 16px;
       }
@@ -79,7 +82,7 @@
           </template>
           <div class="horizontal layout flex">
             <!--  Template selection-->
-            <paper-listbox selected="{{selectedTemplateIdx}}">
+            <paper-listbox id="templateList" selected="{{selectedTemplateIdx}}">
               <template is="dom-repeat" items="{{jobTemplates}}" index-as="index">
                 <paper-item class="item flex">
                   <paper-item-body two-line>
