@@ -28,13 +28,22 @@
         display: block;
         @apply(--layout-vertical);
         @apply(--layout-flex);
+        --paper-item-selected:{
+          background-color: var(--primary-background-color);
+        }
       }
       neon-animated-pages{
         @apply(--layout-flex);
-        margin: 0 8px;
+        /*margin: 0 8px;*/
       }
       neon-animatable {
         @apply(--layout-horizontal);
+      }
+      paper-listbox{
+        --paper-listbox-background-color:var(--default-primary-color);
+      }
+      #configurationControls{
+        padding-left: 16px;
       }
       #tryAgain{
         color: red;
@@ -81,7 +90,7 @@
               </template>
             </paper-listbox>
             <!--  Configuration control-->
-            <div class="vertical layout flex">
+            <div class="vertical layout flex" id="configurationControls">
               <paper-tabs selected="{{configurationSelection}}" autoselect>
                 <paper-tab>Configuration</paper-tab>
                 <paper-tab>Scheduling</paper-tab>
