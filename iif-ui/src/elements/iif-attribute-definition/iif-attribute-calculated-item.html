@@ -60,6 +60,18 @@
       </template>
       <!--  incoming and outgoing names-->
       <!--  Drop down based on all the field names in the form-->
+      <!--  Data Type selection-->
+      <paper-dropdown-menu id="calcFields" class="field" label="{{originalAttribute}}">
+        <paper-listbox class="dropdown-content"
+          id="calcFieldsListbox"
+          multi
+          selected-values="{{toCombine}}"
+          attr-for-selected="value">
+          <template is="dom-repeat" items="{{fieldList}}" index-as="index">
+            <paper-item value="{{item.originalAttribute}}">{{item.originalAttribute}}</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
       <paper-input class="field"
         label="New Attribute"
         id="newAttribute"
@@ -80,7 +92,7 @@
           </template>
         </paper-listbox>
       </paper-dropdown-menu>
-      <!--  Data Type selection-->
+
       <paper-dropdown-menu id="dataType" class="field" label="Data Type">
         <paper-listbox class="dropdown-content"
           id="dataTypeListBox"
@@ -117,14 +129,6 @@
     Polymer({
       is: 'iif-attribute-calculated-item',
       properties:{
-        field:{
-          type:Object,
-          notify: true
-        },
-        //This is a list of all the other fields used for the concat DD control.
-        fieldList:{
-          tpye: Array
-        },
         attributeTypes:{
           type:Array,
           notify: true
@@ -133,22 +137,40 @@
           type:Array,
           notify: true
         },
+        field:{
+          type:Object,
+          notify: true
+        },
+        //This is a list of all the other fields used for the concat DD control.
+        fieldList:{
+          type: Array
+        },
+        newField:{
+          type: Boolean,
+          value: true
+        },
+        originalAttribute:{
+          type: String,
+          notify: true
+        },
         selectedType:{
           type:Object,
+          notify: true
+        },
+        //These are the originalAttribute fields that have been selected for combination.
+        toCombine:{
+          type:Array,
           notify: true
         },
         valid:{
           type:Boolean,
           notify: true
-        },
-        newField:{
-          type: Boolean,
-          value: true
         }
       },
       observers:[
         'validate(field.*)',
         '_fieldAttributesChanged(field.attributes.*)',
+        'toCombineChanged(toCombine.length)'
       ],
       _fieldAttributesChanged(changeRecord){
         var changeClass = true;
@@ -194,6 +216,11 @@
       },
       showTransformer(event){
         this.$.transformerDialog.open();
+      },
+      toCombineChanged(newLength, oldLength){
+        console.info('toCombine changed: ', this.toCombine);
+        this.originalAttribute = this.toCombine.join(" + ");
+        console.info('toCombine changed: ', this.originalAttribute);
       },
       validate(changeRec){
         //Will always be checked when first created- don't validate yet.
