@@ -55,60 +55,60 @@ public class DataSourceRepositoryTests {
 	private List<AttributeMapping> getAttributeMappings() {		
 		List<String> formatters = Arrays.asList("M/d/yyyy HH:mm");
 		List<AttributeMapping> mappings = new ArrayList<AttributeMapping>();
-		mappings.add(new AttributeMapping("MLS Number", "mls_number", new AttributeType("", "", DataType.INTEGER),
-				null, null, null));
-		mappings.add(new AttributeMapping("Last Change Timestamp", "datetime", new AttributeType("datetime", "Use this as the record time", DataType.DATE),
-				formatters, null, null));
-		mappings.add(new AttributeMapping("Type", "type", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Status", "status", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("List Price", "price", new AttributeType("", "", DataType.INTEGER),
-				null, null, null));
-		mappings.add(new AttributeMapping("City", "city", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("State", "state", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Zip Code", "zip", new AttributeType("", "", DataType.INTEGER),
-				null, null, null));
-		mappings.add(new AttributeMapping("County", "county", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Neighborhood", "neighborhood", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Incorporated", "incorporated", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Total Baths", "baths", new AttributeType("", "", DataType.INTEGER),
-				null, null, null));
-		mappings.add(new AttributeMapping("Total Bedrooms", "bedrooms", new AttributeType("", "", DataType.INTEGER),
-				null, null, null));
-		mappings.add(new AttributeMapping("SqFt Above", "above_sqft", new AttributeType("", "", DataType.INTEGER),
-				null, null, null));
-		mappings.add(new AttributeMapping("SqFt Finished", "finished_sqft", new AttributeType("", "", DataType.INTEGER),
-				null, null, null));
-		mappings.add(new AttributeMapping("SqFt Total", "total_sqft", new AttributeType("", "", DataType.INTEGER),
-				null, null, null));
-		mappings.add(new AttributeMapping("Measurement Source", "measurement_source", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Heating Type", "heating_type", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Fuel Type", "fuel_type", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Cooling", "cooling", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("School District", "school_district", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Listing Agent Email", "agent_email", new AttributeType("", "", DataType.STRING),
-				null, null, null));
-		mappings.add(new AttributeMapping("Under Contract Date", "contract_date", new AttributeType("", "", DataType.DATE),
-				formatters, null, null));
-		mappings.add(new AttributeMapping("Sold Date", "sold_date", new AttributeType("", "", DataType.DATE),
-				formatters, null, null));
-		mappings.add(new AttributeMapping("Sold Price", "sold_price", new AttributeType("", "", DataType.INTEGER),
-				null, null, null));
-		mappings.add(new AttributeMapping("Latitude", "latitude", new AttributeType("latitude", "Latitude Field", DataType.DECIMAL),
-				null, null, null));
-		mappings.add(new AttributeMapping("Longitude", "longitude", new AttributeType("longitude", "Longitude Field", DataType.DECIMAL),
-				null, null, null));
+		mappings.add(new AttributeMapping("MLS Number", "mls_number", new AttributeType("", "", DataType.INTEGER,false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Last Change Timestamp", "datetime", new AttributeType("datetime", "Use this as the record time", DataType.DATE, false),
+				formatters, null, null, true, false));
+		mappings.add(new AttributeMapping("Type", "type", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Status", "status", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("List Price", "price", new AttributeType("", "", DataType.INTEGER, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("City", "city", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("State", "state", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Zip Code", "zip", new AttributeType("", "", DataType.INTEGER, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("County", "county", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Neighborhood", "neighborhood", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Incorporated", "incorporated", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Total Baths", "baths", new AttributeType("", "", DataType.INTEGER, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Total Bedrooms", "bedrooms", new AttributeType("", "", DataType.INTEGER, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("SqFt Above", "above_sqft", new AttributeType("", "", DataType.INTEGER, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("SqFt Finished", "finished_sqft", new AttributeType("", "", DataType.INTEGER, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("SqFt Total", "total_sqft", new AttributeType("", "", DataType.INTEGER, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Measurement Source", "measurement_source", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Heating Type", "heating_type", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Fuel Type", "fuel_type", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Cooling", "cooling", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("School District", "school_district", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Listing Agent Email", "agent_email", new AttributeType("", "", DataType.STRING, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Under Contract Date", "contract_date", new AttributeType("", "", DataType.DATE, false),
+				formatters, null, null, true, false));
+		mappings.add(new AttributeMapping("Sold Date", "sold_date", new AttributeType("", "", DataType.DATE, false),
+				formatters, null, null, true, false));
+		mappings.add(new AttributeMapping("Sold Price", "sold_price", new AttributeType("", "", DataType.INTEGER, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Latitude", "latitude", new AttributeType("latitude", "Latitude Field", DataType.DECIMAL, false),
+				null, null, null, true, false));
+		mappings.add(new AttributeMapping("Longitude", "longitude", new AttributeType("longitude", "Longitude Field", DataType.DECIMAL, false),
+				null, null, null, true, false));
 		return mappings;
 	}
 

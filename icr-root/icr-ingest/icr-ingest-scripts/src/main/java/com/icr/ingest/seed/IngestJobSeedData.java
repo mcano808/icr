@@ -13,16 +13,16 @@ public class IngestJobSeedData
     @Autowired
     private IngestJobRepository repository;
     
-    public void populateIngestJobs()
+    public void populateData()
     {               
         
         try
         {
             ObjectMapper om = new ObjectMapper();            
             repository.deleteAll();
-            IngestJob readJob = om.readValue(Thread.currentThread().getContextClassLoader().
+            IngestJob data = om.readValue(Thread.currentThread().getContextClassLoader().
                     getResourceAsStream("seed_data/Dropbox_CSV.json"), IngestJob.class);
-            repository.insert(readJob);            
+            repository.insert(data);            
         }
         catch (Exception e)
         {

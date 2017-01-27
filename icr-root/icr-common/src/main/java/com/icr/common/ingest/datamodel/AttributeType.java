@@ -3,6 +3,7 @@ package com.icr.common.ingest.datamodel;
 import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AttributeType
@@ -12,19 +13,24 @@ public class AttributeType
     private String name;
     private String description;
     private DataType dataType;
+    private boolean unique;
 
-    public AttributeType() {
-		// Intentionally left blank
-	}
+    public AttributeType()
+    {
+        // Intentionally left blank
+    }
 
-	public AttributeType(String name, String description, DataType dataType) {
-		super();
-		this.name = name;
-		this.description = description;
-		this.dataType = dataType;
-	}
+    public AttributeType(@JsonProperty("name") String name, @JsonProperty("description") String description,
+            @JsonProperty("dataType") DataType dataType, @JsonProperty("unique") boolean unique)
+    {
+        super();
+        this.name = name;
+        this.description = description;
+        this.dataType = dataType;
+        this.unique = unique;
+    }
 
-	public String getName()
+    public String getName()
     {
         return name;
     }
@@ -52,6 +58,16 @@ public class AttributeType
     public void setDataType(DataType dataType)
     {
         this.dataType = dataType;
+    }
+
+    public boolean isUnique()
+    {
+        return unique;
+    }
+
+    public void setUnique(boolean unique)
+    {
+        this.unique = unique;
     }
 
 }

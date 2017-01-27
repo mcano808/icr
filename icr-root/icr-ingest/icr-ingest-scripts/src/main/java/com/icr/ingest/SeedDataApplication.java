@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 
+import com.icr.ingest.seed.AttributeTypeSeedData;
 import com.icr.ingest.seed.IngestJobSeedData;
 
 @SpringBootApplication(exclude =
@@ -15,10 +16,12 @@ public class SeedDataApplication
     {
         ApplicationContext ctx = SpringApplication.run(SeedDataApplication.class, args);
         IngestJobSeedData ingestJobSeedData = ctx.getBean(IngestJobSeedData.class);
+        AttributeTypeSeedData attrTypeSeedData = ctx.getBean(AttributeTypeSeedData.class);
         
         //Seed the ingest jobs        
-        ingestJobSeedData.populateIngestJobs();
+        ingestJobSeedData.populateData();
         
-        //TODO: Other seeding to follow
+        //Seed attribute types
+        attrTypeSeedData.populateData();
     }
 }
