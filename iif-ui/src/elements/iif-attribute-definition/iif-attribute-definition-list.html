@@ -5,6 +5,7 @@
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../iif-behaviors/fieldDefinitionBehavior.html">
 <link rel="import" href="./iif-attribute-definition-item.html">
+<link rel="import" href="./iif-attribute-calculated-item.html">
 <dom-module id="iif-attribute-definition-list">
   <template>
     <style include="iron-flex iron-flex-alignment">
@@ -16,6 +17,14 @@
       }
     </style>
     <div class="vertical layout flex">
+      <template is="dom-repeat" items="{{calculatedFields}}" index-as="index">
+        <div class="horizontal layout end">
+          <iif-attribute-calculated-item class="flex" field="{{item}}"></iif-attribute-calculated-item>
+          <paper-button on-tap="_removeCalcRow">
+            <iron-icon icon="cancel"></iron-icon>
+          </paper-button>
+        </div>
+      </template>
       <template is="dom-repeat" items="{{attributeMappings}}" index-as="index">
         <div class="horizontal layout end">
           <iif-attribute-definition-item class="flex" field="{{item}}"></iif-attribute-definition-item>
@@ -30,7 +39,12 @@
         <iron-icon icon="add"></iron-icon>
         <span class="flex">Add a field...</span>
       </paper-button>
-
+    </div>
+    <div class="horizontal layout">
+      <paper-button class="flex" on-tap="_addNewCalculatedFieldDefinition">
+        <iron-icon icon="group-work"></iron-icon>
+        <span class="flex">Add a calculated field field...</span>
+      </paper-button>
     </div>
   </template>
   <script>
@@ -42,6 +56,12 @@
           type:Array,
           notify: true,
           observer:'_attributeMappingsChanged'
+        },
+        calculatedFields:{
+          type: Array,
+          notify: true,
+          observer:'_calculatedFieldsChanged',
+          value:()=>{return [];}
         },
         fieldValidation:{
           type: Array,
@@ -61,6 +81,12 @@
           computed:'_computeHasErrors(errors.length)'
         }
       },
+      _addNewCalculatedFieldDefinition(){
+        let newCF = this.newCalculatedFieldDefinition();
+        console.info('made new calulated field to push: ', newCF);
+        this.push('fieldValidation', newCF.valid);
+        this.push('calculatedFields', newCF);
+      },
       _addNewFieldDefinition(){
         //TODO Make sure this has an attributeMappings set.  If not then direct back to template selection.
         //Use method from behavior to create consisten data model.
@@ -75,12 +101,20 @@
         //If it's not missing then we continue processing it.
         if(newMappings === undefined)this.set('attributeMappings',[]);
       },
+      _calculatedFieldsChanged(newFields, oldFields){
+        console.info('calc fields changed: ', newFields);
+        if(newFields === undefined) this.set('calculatedFields', []);
+      },
       _computeHasErrors(newLength, oldLength){
         if(newLength > 0){
           return false
         }else{
           return true;
         }
+      },
+      _removeCalcRow(event){
+        console.info('removing this row: ', event);
+        this.splice('calculatedFields', event.model.index, 1);
       },
       _removeRow(event){
         console.info('removing this row: ', event);
