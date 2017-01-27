@@ -11,17 +11,7 @@ var iifBehaviors = iifBehaviors || {};
  */
 iifBehaviors.fieldDefinition = {
   properties:{},
-  newCalculatedFieldDefinition(){
-    return {
-      originalAttributes:[],
-      newAttribute:'',
-      attributeType: this.newAttributeType(),
-      dataType:'',
-      valid: true,
-      exclude: false
-    };
-  },
-  newFieldDefinition(){
+  newFieldDefinition(isCalculated){
     return {
       originalAttribute:'',
       newAttribute:'',
@@ -31,7 +21,7 @@ iifBehaviors.fieldDefinition = {
       transformers:[],
       valid: true,
       persisted: true,
-      calculated: false
+      calculated: isCalculated || false
     };
   },
   newAttributeType(){

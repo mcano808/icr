@@ -2,7 +2,7 @@
 <link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iif-behaviors/fieldDefinitionBehavior.html">
 <link rel="import" href="./iif-attribute-definition-item.html">
 <link rel="import" href="./iif-attribute-calculated-item.html">
@@ -15,22 +15,24 @@
       paper-button span{
         text-transform: none;
       }
+      .calculated{
+        background-color: var(--default-primary-color);
+      }
     </style>
     <div class="vertical layout flex">
-      <template is="dom-repeat" items="{{calculatedMappings}}" index-as="index">
-        <div class="horizontal layout end">
-          <iif-attribute-calculated-item class="flex"field-list="{{attributeMappings}}" field="{{item}}"></iif-attribute-calculated-item>
-          <paper-button on-tap="_removeCalcRow">
-            <iron-icon icon="cancel"></iron-icon>
-          </paper-button>
-        </div>
-      </template>
       <template is="dom-repeat" items="{{attributeMappings}}" index-as="index">
-        <div class="horizontal layout end">
-          <iif-attribute-definition-item class="flex" field="{{item}}"></iif-attribute-definition-item>
-          <paper-button on-tap="_removeRow">
-            <iron-icon icon="cancel"></iron-icon>
-          </paper-button>
+          <template is="dom-if" if="{{item.calculated}}" restamp="true">
+            <div class="horizontal layout end calculated">
+              <iif-attribute-calculated-item class="flex"field-list="{{attributeMappings}}" field="{{item}}"></iif-attribute-calculated-item>
+              <paper-icon-button icon="cancel" on-tap="_removeRow"></paper-icon-button>
+            </div>
+          </template>
+          <template is="dom-if" if="{{!item.calculated}}" restamp="true">
+            <div class="horizontal layout end">
+              <iif-attribute-definition-item class="flex" field="{{item}}"></iif-attribute-definition-item>
+              <paper-icon-button icon="cancel" on-tap="_removeRow"></paper-icon-button>
+            </div>
+          </template>
         </div>
       </template>
     </div>
@@ -82,10 +84,10 @@
         }
       },
       _addNewCalculatedFieldDefinition(){
-        let newCF = this.newCalculatedFieldDefinition();
+        let newCF = this.newFieldDefinition(true);
         console.info('made new calulated field to push: ', newCF);
         this.push('fieldValidation', newCF.valid);
-        this.push('calculatedMappings', newCF);
+        this.push('attributeMappings', newCF);
       },
       _addNewFieldDefinition(){
         //TODO Make sure this has an attributeMappings set.  If not then direct back to template selection.
@@ -111,10 +113,6 @@
         }else{
           return true;
         }
-      },
-      _removeCalcRow(event){
-        console.info('removing this row: ', event);
-        this.splice('calculatedMappings', event.model.index, 1);
       },
       _removeRow(event){
         console.info('removing this row: ', event);
