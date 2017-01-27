@@ -2,7 +2,9 @@ package com.icr.ingest.webservices.nifi.common;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.apache.nifi.web.api.dto.ProcessGroupDTO;
 import org.apache.nifi.web.api.dto.RevisionDTO;
@@ -11,19 +13,26 @@ import org.apache.nifi.web.api.entity.InstantiateTemplateRequestEntity;
 import org.apache.nifi.web.api.entity.ProcessGroupEntity;
 import org.apache.nifi.web.api.entity.TemplateEntity;
 import org.apache.nifi.web.api.entity.TemplatesEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.icr.ingest.webservices.nifi.NifiRestHandler;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.file.FileDataBodyPart;
 
 public class NifiRestUtils
 {
-    private String nifiServer;
-    private NifiRestHandler handler;
-    private RevisionDTO revision;
+
+    private static final Logger log = LoggerFactory.getLogger(NifiRestUtils.class);
+    private final String nifiServer;
+    private final NifiRestHandler handler;
+    private final RevisionDTO revision;
 
     /**
-     * Creates a new instance. Each instance maintains a internal revision. This
-     * revision is used for all calls. If you want a new revision then
-     * instantiate a new instance of this class.
+     * Creates a new instance. Each instance maintains a internal revision. This revision is used for all calls. If you
+     * want a new revision then instantiate a new instance of this class.
      * 
      * @param handler
      * @param nifiServer
@@ -98,5 +107,35 @@ public class NifiRestUtils
     private String getRestUrl(String endpoint, Object... formatArgs)
     {
         return String.format(nifiServer + endpoint, formatArgs);
+    }
+
+    public void uploadTemplates()
+    {
+        try
+        {
+            ProcessGroupEntity rootGroup = getProcessGroup("root");
+            Set<String> currentTemplateNames = handler.get(getRestUrl(NifiEndPoints.GET_TEMPLATES), TemplatesEntity.class).getTemplates()
+                    .stream()
+                    .map(te -> te.getTemplate().getName())
+                    .collect(Collectors.toSet());
+            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            Resource[] resources;
+            resources = resolver.getResources("classpath*:templates/*.xml");
+            for (Resource resource : resources)
+            {
+                if (currentTemplateNames.contains(resource.getFilename().replaceAll(".xml$", "")))
+                {
+                    log.info(resource.getFilename() + " already uploaded, skipping...");
+                    continue;
+                }
+                FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+                formDataMultiPart.bodyPart(new FileDataBodyPart("template", resource.getFile()));
+                handler.postMultiPart(getRestUrl(NifiEndPoints.UPLOAD_TEMPLATE, rootGroup.getId()), formDataMultiPart, String.class);
+                log.info(resource.getFilename() + " uploaded.");
+            }
+        } catch (Exception ex)
+        {
+            log.warn("Problem uploading templates.", ex);
+        }
     }
 }
