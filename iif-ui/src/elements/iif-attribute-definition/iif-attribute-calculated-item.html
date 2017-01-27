@@ -2,6 +2,7 @@
 <link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="../../../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
@@ -26,6 +27,9 @@
       #indicator{
         min-width: 20px;
         margin-left: -12px;
+      }
+      #excludeControl{
+        margin-top: 10px;
       }
       .good{
         color: darkgreen;
@@ -55,12 +59,7 @@
         <paper-icon-button class="bad" icon="error-outline"></paper-icon-button>
       </template>
       <!--  incoming and outgoing names-->
-      <paper-input class="field"
-        label="Original Attribute"
-        id="originalAttribute"
-        required
-        auto-validate
-        value="{{field.originalAttribute}}"></paper-input>
+      <!--  Drop down based on all the field names in the form-->
       <paper-input class="field"
         label="New Attribute"
         id="newAttribute"
@@ -100,31 +99,18 @@
           <!--  Placeholder to push out the rest of the controls-->
         </span>
         <paper-icon-button class=""
-          id="formatterTrigger"
-          icon="text-format"
-          on-tap="showStringFormatter"></paper-icon-button>
-        <paper-icon-button class=""
-          id="transformerTrigger"
-          icon="swap-horiz"
-          on-tap="showTransformer"></paper-icon-button>
-        <paper-icon-button class=""
           icon="view-list"
           id="attributesTrigger"
           on-tap="showAttributes"></paper-icon-button>
+        <!--  checkbox to include/exclude-->
+        <paper-checkbox id="excludeControl" checked="{{field.exclude}}">Exclude</paper-checkbox>
+
       </div>
       <!-- Dialogs for this row -->
       <paper-dialog id="attributesDialog">
         <h2> Additional Attributes</h2>
         <iif-field-definition-attributes attributes="{{field.attributes}}"></iif-field-definition-attributes>
       </paper-dialog>
-      <paper-dialog id="formatStringDialog">
-        <h2>String Formatters</h2>
-        <iif-field-definition-formatter formatters="{{field.formatters}}"></iif-field-definition-formatter>
-      </paper-dialog>
-      <paper-dialog id="transformerDialog">
-        <h2>Transformer</h2>
-        <iif-field-definition-transformer transformer-options="{{transformerOptions}}" transformers="{{field.transformers}}"></iif-field-definition-transformer>
-      </paper-dailog>
     </div>
   </template>
   <script>
@@ -135,16 +121,16 @@
           type:Object,
           notify: true
         },
+        //This is a list of all the other fields used for the concat DD control.
+        fieldList:{
+          tpye: Array
+        },
         attributeTypes:{
           type:Array,
           notify: true
         },
         dataTypes:{
           type:Array,
-          notify: true
-        },
-        knownAttributes:{
-          type: Array,
           notify: true
         },
         selectedType:{
@@ -163,8 +149,6 @@
       observers:[
         'validate(field.*)',
         '_fieldAttributesChanged(field.attributes.*)',
-        '_fieldFormattersChanged(field.formatters.*)',
-        '_fieldTransformersChanged(field.transformers.*)'
       ],
       _fieldAttributesChanged(changeRecord){
         var changeClass = true;
@@ -173,20 +157,6 @@
           changeClass = false;
         }
         this.$.attributesTrigger.toggleClass('good', changeClass);
-      },
-      _fieldFormattersChanged(changeRecord){
-        var changeClass = true;
-        if(changeRecord.base.length < 1){
-          changeClass = false
-        }
-        this.$.formatterTrigger.toggleClass('good', changeClass);
-      },
-      _fieldTransformersChanged(changeRecord){
-        var changeClass = true;
-        if(changeRecord.base.length < 1){
-          changeClass = false;
-        }
-        this.$.transformerTrigger.toggleClass('good', changeClass);
       },
       _setAttributeType(event){
         let model = event.model.item;

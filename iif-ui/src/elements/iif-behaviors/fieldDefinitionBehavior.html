@@ -11,6 +11,16 @@ var iifBehaviors = iifBehaviors || {};
  */
 iifBehaviors.fieldDefinition = {
   properties:{},
+  newCalculatedFieldDefinition(){
+    return {
+      originalAttributes:[],
+      newAttribute:'',
+      attributeType: this.newAttributeType(),
+      dataType:'',
+      valid: true,
+      exclude: false
+    };
+  },
   newFieldDefinition(){
     return {
       originalAttribute:'',
@@ -18,7 +28,8 @@ iifBehaviors.fieldDefinition = {
       attributeType:this.newAttributeType(),
       dataType:'',
       formatters:[],
-      transformers:[]
+      transformers:[],
+      valid: true
     };
   },
   newAttributeType(){
