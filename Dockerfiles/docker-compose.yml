@@ -1,0 +1,20 @@
+version: '2'
+services:
+  nifi:
+    build: ./nifi
+    ports:
+      - "9090:80"
+    environment:
+      DISABLE_SSL: "true"
+    volumes:
+      - ./data_volumes/nifi/flowfile_repository:/opt/nifi/flowfile_repository
+      - ./data_volumes/nifi/database_repository:/opt/nifi/database_repository
+      - ./data_volumes/nifi/content_repository:/opt/nifi/content_repository
+      - ./data_volumes/nifi/provenance_repository:/opt/nifi/provenance_repository
+  mongo:
+    ports:
+      - 27017:27017
+    image: mongo
+    volumes:
+      - ./data_volumes/mongo:/data/db
+
