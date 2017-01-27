@@ -17,9 +17,9 @@
       }
     </style>
     <div class="vertical layout flex">
-      <template is="dom-repeat" items="{{calculatedFields}}" index-as="index">
+      <template is="dom-repeat" items="{{calculatedMappings}}" index-as="index">
         <div class="horizontal layout end">
-          <iif-attribute-calculated-item class="flex" field="{{item}}"></iif-attribute-calculated-item>
+          <iif-attribute-calculated-item class="flex"field-list="{{attributeMappings}}" field="{{item}}"></iif-attribute-calculated-item>
           <paper-button on-tap="_removeCalcRow">
             <iron-icon icon="cancel"></iron-icon>
           </paper-button>
@@ -57,10 +57,10 @@
           notify: true,
           observer:'_attributeMappingsChanged'
         },
-        calculatedFields:{
+        calculatedMappings:{
           type: Array,
           notify: true,
-          observer:'_calculatedFieldsChanged',
+          observer:'_calculatedMappingsChanged',
           value:()=>{return [];}
         },
         fieldValidation:{
@@ -85,7 +85,7 @@
         let newCF = this.newCalculatedFieldDefinition();
         console.info('made new calulated field to push: ', newCF);
         this.push('fieldValidation', newCF.valid);
-        this.push('calculatedFields', newCF);
+        this.push('calculatedMappings', newCF);
       },
       _addNewFieldDefinition(){
         //TODO Make sure this has an attributeMappings set.  If not then direct back to template selection.
@@ -101,9 +101,9 @@
         //If it's not missing then we continue processing it.
         if(newMappings === undefined)this.set('attributeMappings',[]);
       },
-      _calculatedFieldsChanged(newFields, oldFields){
+      _calculatedMappingsChanged(newFields, oldFields){
         console.info('calc fields changed: ', newFields);
-        if(newFields === undefined) this.set('calculatedFields', []);
+        if(newFields === undefined) this.set('calculatedMappings', []);
       },
       _computeHasErrors(newLength, oldLength){
         if(newLength > 0){
@@ -114,7 +114,7 @@
       },
       _removeCalcRow(event){
         console.info('removing this row: ', event);
-        this.splice('calculatedFields', event.model.index, 1);
+        this.splice('calculatedMappings', event.model.index, 1);
       },
       _removeRow(event){
         console.info('removing this row: ', event);

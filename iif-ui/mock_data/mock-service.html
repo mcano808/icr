@@ -107,23 +107,28 @@
             return[{
               name:'LAT',
               description:'This is a latitude.',
-              dataType:'DECIMAL'
+              dataType:'DECIMAL',
+              unique: true
             },{
               name:'LON',
               description:'This is a longitude.',
-              dataType:'DECIMAL'
+              dataType:'DECIMAL',
+              unique: true
             },{
               name:'URL',
               description:'This is a url.',
-              dataType:'STRING'
+              dataType:'STRING',
+              unique: false
             },{
               name:'FREQ',
               description:'This is a freq in MHz.',
-              dataType:'INTEGER'
+              dataType:'INTEGER',
+              unique: true
             },{
               name:'OTHER',
               description:'This is any other field.',
-              dataType:'STRING'
+              dataType:'STRING',
+              unique: false
             }]
           }
         },
