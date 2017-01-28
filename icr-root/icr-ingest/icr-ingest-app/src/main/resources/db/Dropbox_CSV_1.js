@@ -1,4 +1,4 @@
-db.ingestJobs.save({
+db.ingestJob.save({
 	  "id" : null,
 	  "jobType" : "DROPBOX_CSV",
 	  "name" : "Dropbox CSV",

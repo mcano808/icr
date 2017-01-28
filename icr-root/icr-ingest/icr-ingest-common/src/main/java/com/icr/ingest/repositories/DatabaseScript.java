@@ -1,4 +1,4 @@
-package com.icr.ingest.db;
+package com.icr.ingest.repositories;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

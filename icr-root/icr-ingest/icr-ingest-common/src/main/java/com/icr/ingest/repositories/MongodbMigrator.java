@@ -1,4 +1,4 @@
-package com.icr.ingest.db;
+package com.icr.ingest.repositories;
 
 import java.io.IOException;
 import java.io.InputStream;

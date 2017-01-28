@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.icr.ingest.db.MongodbMigrator;
+import com.icr.ingest.repositories.MongodbMigrator;
 import com.icr.ingest.webservices.nifi.NifiRestHandler;
 import com.icr.ingest.webservices.nifi.common.NifiRestUtils;
 
