@@ -6,6 +6,10 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.icr.common.ingest.datamodel.IngestJob;
 
+/**
+ * Repository for retrieving ingest job definitions
+ *
+ */
 @RepositoryRestResource(collectionResourceRel = "ingestJobs", path = "ingestJobs")
 public interface IngestJobRepository extends MongoRepository<IngestJob, String>
 {

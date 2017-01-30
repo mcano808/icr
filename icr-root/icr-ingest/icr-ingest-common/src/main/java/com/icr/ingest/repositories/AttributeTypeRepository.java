@@ -8,6 +8,10 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.icr.common.ingest.datamodel.AttributeType;
 
+/**
+ * Repository for retrieving attribute type definitions
+ *
+ */
 @RepositoryRestResource(collectionResourceRel = "attributeTypes", path = "attributeTypes")
 public interface AttributeTypeRepository extends MongoRepository<AttributeType, String>
 {

@@ -8,7 +8,11 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.icr.common.ingest.datamodel.DataSource;
 
-@RepositoryRestResource(collectionResourceRel = "datasources", path = "datasources")
+/**
+ * Repository for retrieving data source definitions
+ *
+ */
+@RepositoryRestResource(collectionResourceRel = "dataSources", path = "dataSources")
 public interface DataSourceRepository extends MongoRepository<DataSource, String>
 {
 
