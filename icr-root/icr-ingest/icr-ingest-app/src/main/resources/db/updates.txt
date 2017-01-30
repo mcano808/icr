@@ -4,3 +4,4 @@ AttributeTypes_1.js
 DataStoreJobs_1.js
 DataTypes_1.js
 Dropbox_CSV_AllowableValues.js
+DataSourceTypes_1.js
