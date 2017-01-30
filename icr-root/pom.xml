@@ -31,11 +31,9 @@
 				<artifactId>jackson-databind</artifactId>
 				<version>${jackson.version}</version>
 			</dependency>
-			<!-- <dependency>
-				<groupId>com.fasterxml.jackson.dataformat</groupId>
-				<artifactId>jackson-dataformat-avro</artifactId>
-				<version>${jackson.version}</version>
-			</dependency> -->
+			<!-- <dependency> <groupId>com.fasterxml.jackson.dataformat</groupId> 
+				<artifactId>jackson-dataformat-avro</artifactId> <version>${jackson.version}</version> 
+				</dependency> -->
 			<!-- Apache Nifi -->
 			<dependency>
 				<groupId>org.apache.nifi</groupId>
@@ -54,10 +52,10 @@
 				<version>${avro.version}</version>
 			</dependency>
 			<dependency>
-                <groupId>org.apache.avro</groupId>
-                <artifactId>avro-tools</artifactId>
-                <version>${avro.version}</version>
-            </dependency>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro-tools</artifactId>
+				<version>${avro.version}</version>
+			</dependency>
 			<!-- Jersey -->
 			<dependency>
 				<groupId>com.sun.jersey</groupId>
@@ -97,20 +95,5 @@
 			</properties>
 		</profile>
 	</profiles>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<configuration>
-					<delimiters>
-						<delimiter>@</delimiter>
-					</delimiters>
-					<useDefaultDelimiters>false</useDefaultDelimiters>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

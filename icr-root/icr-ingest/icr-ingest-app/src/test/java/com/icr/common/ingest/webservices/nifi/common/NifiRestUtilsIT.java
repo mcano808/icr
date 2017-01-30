@@ -9,12 +9,10 @@ import org.apache.nifi.web.api.entity.ProcessGroupEntity;
 import org.apache.nifi.web.api.entity.TemplateEntity;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.icr.ingest.Application;
@@ -24,7 +22,6 @@ import com.icr.ingest.webservices.nifi.common.NifiRestUtils;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes =
 { Application.class })
-@TestPropertySource("classpath:ingest.properties")
 /**
  * Only used for integration testing
  *

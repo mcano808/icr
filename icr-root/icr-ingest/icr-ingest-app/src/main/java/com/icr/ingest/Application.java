@@ -6,7 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -19,7 +18,7 @@ import com.icr.ingest.webservices.nifi.NifiRestHandler;
 import com.icr.ingest.webservices.nifi.common.NifiRestUtils;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
-public class Application extends SpringBootServletInitializer implements CommandLineRunner
+public class Application implements CommandLineRunner
 {
     @Autowired
     private MongodbMigrator migrator;

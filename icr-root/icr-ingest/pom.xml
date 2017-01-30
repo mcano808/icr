@@ -30,5 +30,5 @@
 				<version>${icr-ingest-common.version}</version>
 			</dependency>
 		</dependencies>
-	</dependencyManagement>
+	</dependencyManagement>	
 </project>
