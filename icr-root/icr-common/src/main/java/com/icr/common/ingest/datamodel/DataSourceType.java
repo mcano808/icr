@@ -19,6 +19,11 @@ public class DataSourceType
         this.description = description;
     }
 
+    public String getId()
+    {
+        return id;
+    }
+
     public String getName()
     {
         return name;
