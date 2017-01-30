@@ -170,6 +170,10 @@
           notify: true
         }
       },
+      listeners:{
+        "mouseover":"_hovered",
+        "mouseout":"_unhovered"
+      },
       observers:[
         'validate(field.*)',
         '_fieldAttributesChanged(field.attributes.*)',
@@ -182,6 +186,14 @@
           changeClass = false;
         }
         this.$.attributesTrigger.toggleClass('good', changeClass);
+      },
+      _hovered(){
+        //Fire an event with a payload of toCombine
+        this.fire('calcfieldhover',{fields: this.toCombine});
+      },
+      _unhovered(){
+        //Fire event with payload of toCombine.
+        this.fire('calcfieldunhover',{fields: this.toCombine});
       },
       //We want to filter out other calulated fields from this list and only allow regular fields
       _notCalcField(item){
