@@ -7,7 +7,8 @@ db.ingestJob.save({
 	    "description" : "Strategy to use in Scheduling Settings (Timer driven, CRON driven)",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Scheduling Settings",
+	    "group": "Basic",
+	    "subGroup" : "Scheduling Settings",
 	    "defaultValue" : "Timer Driven",
 	    "reference" : "GetFile.Scheduling Settings Strategy"
 	  }, {
@@ -15,7 +16,8 @@ db.ingestJob.save({
 	    "description" : "The number of concurrent tasks to run.",
 	    "required" : true,
 	    "type" : "INTEGER",
-	    "group" : "Scheduling Settings",
+	    "group": "Basic",
+	    "subGroup" : "Scheduling Settings",
 	    "defaultValue" : 1,
 	    "reference" : "GetFile.Concurrent Tasks"
 	  }, {
@@ -23,7 +25,8 @@ db.ingestJob.save({
 	    "description" : "Amount of time that should elapse between task executions",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Scheduling Settings",
+	    "group": "Basic",
+	    "subGroup" : "Scheduling Settings",
 	    "defaultValue" : "0 sec",
 	    "reference" : "GetFile.Run Schedule"
 	  }, {
@@ -31,7 +34,8 @@ db.ingestJob.save({
 	    "description" : "Directory from which to read files from.",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Raw Data Input Settings",
+	    "group": "Basic",
+	    "subGroup" : "Raw Data Input Settings",
 	    "defaultValue" : null,
 	    "reference" : "GetFile.Input Directory"
 	  }, {
@@ -39,7 +43,8 @@ db.ingestJob.save({
 	    "description" : "Regex for files that will be picked up.",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Raw Data Input Settings",
+	    "group": "Basic",
+	    "subGroup" : "Raw Data Input Settings",
 	    "defaultValue" : null,
 	    "reference" : "GetFile.File Filter"
 	  }, {
@@ -47,7 +52,8 @@ db.ingestJob.save({
 	    "description" : "When recursing subdirectories only scan subdirectories that match this regex.",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Advanced Raw Data Input Settings Settings",
+	    "group": "Basic",
+	    "subGroup" : "Advanced Raw Data Input Settings Settings",
 	    "defaultValue" : null,
 	    "reference" : "GetFile.Path Filter"
 	  }, {
@@ -55,7 +61,8 @@ db.ingestJob.save({
 	    "description" : "Number files to pull in at a time.",
 	    "required" : true,
 	    "type" : "INTEGER",
-	    "group" : "Raw Data Input Settings",
+	    "group": "Basic",
+	    "subGroup" : "Raw Data Input Settings",
 	    "defaultValue" : 10,
 	    "reference" : "GetFile.Batch Size"
 	  }, {
@@ -63,7 +70,8 @@ db.ingestJob.save({
 	    "description" : "If true keep the original source file, otherwise delete it.",
 	    "required" : true,
 	    "type" : "BOOLEAN",
-	    "group" : "Advanced Raw Data Input Settings Settings",
+	    "group": "Advanced",
+	    "subGroup" : "Raw Data Input Settings Settings",
 	    "defaultValue" : false,
 	    "reference" : "GetFile.Keep Source File"
 	  }, {
@@ -71,7 +79,8 @@ db.ingestJob.save({
 	    "description" : "Pull files from subdirectories",
 	    "required" : true,
 	    "type" : "BOOLEAN",
-	    "group" : "Advanced Raw Data Input Settings Settings",
+	    "group": "Advanced",
+	    "subGroup" : "Raw Data Input Settings Settings",
 	    "defaultValue" : false,
 	    "reference" : "GetFile.Recurse Subdirectories"
 	  }, {
@@ -79,7 +88,8 @@ db.ingestJob.save({
 	    "description" : "How long to wait for a directory listing",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Raw Data Input Settings",
+	    "group": "Basic",
+	    "subGroup" : "Raw Data Input Settings",
 	    "defaultValue" : "0 sec",
 	    "reference" : "GetFile.Polling Interval"
 	  }, {
@@ -87,7 +97,8 @@ db.ingestJob.save({
 	    "description" : "Whether hidden files should be ignored",
 	    "required" : true,
 	    "type" : "BOOLEAN",
-	    "group" : "Advanced Raw Data Input Settings Settings",
+	    "group": "Advanced",
+	    "subGroup" : "Raw Data Input Settings Settings",
 	    "defaultValue" : true,
 	    "reference" : "GetFile.Ignore Hidden Files"
 	  }, {
@@ -95,7 +106,8 @@ db.ingestJob.save({
 	    "description" : "The minimum age a file must be in order to be pulled.",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Advanced Raw Data Input Settings Settings",
+	    "group": "Advanced",
+	    "subGroup" : "Raw Data Input Settings Settings",
 	    "defaultValue" : "0 sec",
 	    "reference" : "GetFile.Minimum File Age"
 	  }, {
@@ -103,7 +115,8 @@ db.ingestJob.save({
 	    "description" : "The maximum age a file must be in order to be pulled. Any file older will be ignored",
 	    "required" : false,
 	    "type" : "STRING",
-	    "group" : "Advanced Raw Data Input Settings Settings",
+	    "group": "Advanced",
+	    "subGroup" : "Raw Data Input Settings Settings",
 	    "defaultValue" : "0 sec",
 	    "reference" : "GetFile.Maximum File Age"
 	  }, {
@@ -111,7 +124,8 @@ db.ingestJob.save({
 	    "description" : "The minimum size a file must be in order to be pulled.",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Advanced Raw Data Input Settings Settings",
+	    "group": "Advanced",
+	    "subGroup" : "Raw Data Input Settings Settings",
 	    "defaultValue" : "0 B",
 	    "reference" : "GetFile.Minimum File Size"
 	  }, {
@@ -119,7 +133,8 @@ db.ingestJob.save({
 	    "description" : "The maximum size a file must be in order to be pulled.",
 	    "required" : false,
 	    "type" : "STRING",
-	    "group" : "Advanced Raw Data Input Settings Settings",
+	    "group": "Advanced",
+	    "subGroup" : "Raw Data Input Settings Settings",
 	    "defaultValue" : "",
 	    "reference" : "GetFile.Minimum File Size"
 	  }, {
@@ -127,7 +142,8 @@ db.ingestJob.save({
 	    "description" : "The delimiter to use in parsing. This is a single character",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Delimited Settings",
+	    "group": "Basic",
+	    "subGroup" : "Delimited Settings",
 	    "defaultValue" : ",",
 	    "reference" : ""
 	  }, {
@@ -135,7 +151,8 @@ db.ingestJob.save({
 	    "description" : "The character that can be used to quote values so that the delimiter can be used within a single field. If not specified, a double-quote (\") will be used.",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Delimited Settings",
+	    "group": "Basic",
+	    "subGroup" : "Delimited Settings",
 	    "defaultValue" : "\"",
 	    "reference" : ""
 	  },{
@@ -143,7 +160,8 @@ db.ingestJob.save({
 	    "description" : "The character that can be used to escape the Quote Character or the Delimiter within a field. If not specified, a backslash (\\) is used.",
 	    "required" : true,
 	    "type" : "STRING",
-	    "group" : "Delimited Settings",
+	    "group": "Basic",
+	    "subGroup" : "Delimited Settings",
 	    "defaultValue" : "\\",
 	    "reference" : ""
 	  },{
@@ -151,7 +169,8 @@ db.ingestJob.save({
 	    "description" : "Whether or not quote characters and escape characters should be stripped.",
 	    "required" : true,
 	    "type" : "BOOLEAN",
-	    "group" : "Delimited Settings",
+	    "group": "Basic",
+	    "subGroup" : "Delimited Settings",
 	    "defaultValue" : true,
 	    "reference" : ""
 	  }, {
@@ -159,7 +178,8 @@ db.ingestJob.save({
 	    "description" : "The line number of the header line.  Lines before the header line will be skipped. Lines are counted starting with a 1.",
 	    "required" : true,
 	    "type" : "INTEGER",
-	    "group" : "Delimited Settings",
+	    "group": "Basic",
+	    "subGroup" : "Delimited Settings",
 	    "defaultValue" : 1,
 	    "reference" : ""
 	  }, {
@@ -167,7 +187,8 @@ db.ingestJob.save({
 	    "description" : "The lines to skip in the file.  If the header line is set then this setting represents additional lines past the header line to skip.  Lines are counted starting with a 1. ",
 	    "required" : true,
 	    "type" : "INTEGER",
-	    "group" : "Delimited Settings",
+	    "group": "Basic",
+	    "subGroup" : "Delimited Settings",
 	    "defaultValue" : 0,
 	    "reference" : ""
 	  }],

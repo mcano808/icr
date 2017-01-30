@@ -34,18 +34,18 @@ public class DiscoverService
         // Just some mock up samples
         job.setName("REST URL");
         job.setDescription("A ingest job configuration to ingest data from a restful URL.");
-        job.getJobProperties().add(new JobProperty("URL", "Url Description", true, DataType.STRING, "Group A", null, null));
+        job.getJobProperties().add(new JobProperty("URL", "Url Description", true, DataType.STRING, "Group A", null, null, null));
         job.getJobProperties()
-                .add(new JobProperty("Params", "Params Description", true, DataType.STRING, "Group A", null, null));
+                .add(new JobProperty("Params", "Params Description", true, DataType.STRING, "Group A", null, null, null));
 
         jobs.add(job);
         job = new IngestJob();
         job.setName("File Drop CSV");
         job.setDescription("A file drop box that is csv based data");
         job.getJobProperties()
-                .add(new JobProperty("Directory", "Directory Description", true, DataType.STRING, "Group A", null, null));
+                .add(new JobProperty("Directory", "Directory Description", true, DataType.STRING, "Group A", null, null, null));
         job.getJobProperties()
-                .add(new JobProperty("Schedule", "Schedule Description", true, DataType.STRING, "Group A", null, null));
+                .add(new JobProperty("Schedule", "Schedule Description", true, DataType.STRING, "Group A", null, null, null));
         jobs.add(job);
         Resources<IngestJob> resources = new Resources<>(jobs);
         resources.add(linkTo(methodOn(DiscoverService.class).discoverIngestJobs()).withSelfRel());
@@ -64,9 +64,9 @@ public class DiscoverService
         job.setDescription("A data store job to persist data into elastic search.");
         jobs.add(job);
         job.getJobProperties()
-                .add(new JobProperty("Host", "Host description", true, DataType.STRING, "Group A", "localhost", null));
+                .add(new JobProperty("Host", "Host description", true, DataType.STRING, "Group A", null, "localhost", null));
         job.getJobProperties()
-                .add(new JobProperty("Port", "Port description", true, DataType.INTEGER, "Group A", 6000, null));
+                .add(new JobProperty("Port", "Port description", true, DataType.INTEGER, "Group A", null, 6000, null));
         jobs.add(job);
         Resources<DataStoreJob> resources = new Resources<>(jobs);
         resources.add(linkTo(methodOn(DiscoverService.class).discoverDataStoreJobs()).withSelfRel());

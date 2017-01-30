@@ -12,13 +12,15 @@ public class JobProperty
     private boolean required;
     private DataType type;
     private String group;
+    private String subGroup;
     private Object defaultValue;
     private String reference;
     
     @JsonCreator
     public JobProperty(@JsonProperty("name") String name, @JsonProperty("description") String description,
             @JsonProperty("required") boolean required, @JsonProperty("type") DataType type,
-            @JsonProperty("group") String group, @JsonProperty("defaultValue") Object defaultValue,
+            @JsonProperty("group") String group, @JsonProperty("subGroup") String subGroup,
+            @JsonProperty("defaultValue") Object defaultValue,
             @JsonProperty("refrence") String reference)
     {
         this.name = name;
@@ -26,6 +28,7 @@ public class JobProperty
         this.required = required;
         this.type = type;
         this.group = group;
+        this.subGroup = subGroup;
         this.defaultValue = defaultValue;
         this.reference = reference;
     }
@@ -55,11 +58,6 @@ public class JobProperty
         return reference;
     }
 
-    public void setReference(String reference)
-    {
-        this.reference = reference;
-    }
-
     public DataType getType()
     {
         return type;
@@ -70,9 +68,9 @@ public class JobProperty
         return group;
     }
 
-    public void setGroup(String group)
+    public String getSubGroup()
     {
-        this.group = group;
+        return subGroup;
     }
 
 }

@@ -1,11 +1,14 @@
 package com.icr.ingest.webservices.nifi.common;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.nifi.web.api.dto.ProcessGroupDTO;
 import org.apache.nifi.web.api.dto.RevisionDTO;
 import org.apache.nifi.web.api.entity.FlowEntity;
@@ -116,22 +119,26 @@ public class NifiRestUtils
             ProcessGroupEntity rootGroup = getProcessGroup("root");
             Set<String> currentTemplateNames = handler.get(getRestUrl(NifiEndPoints.GET_TEMPLATES), TemplatesEntity.class).getTemplates()
                     .stream()
-                    .map(te -> te.getTemplate().getName())
+                    .map(te -> te.getTemplate().getName().replaceAll(" ", "_") + "_Template.xml")
                     .collect(Collectors.toSet());
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
             Resource[] resources;
             resources = resolver.getResources("classpath*:templates/*.xml");
             for (Resource resource : resources)
             {
-                if (currentTemplateNames.contains(resource.getFilename().replaceAll(".xml$", "")))
+                if (currentTemplateNames.contains(resource.getFilename()))
                 {
                     log.info(resource.getFilename() + " already uploaded, skipping...");
-                    continue;
+                } else
+                {
+                    File tmp = new File(System.getProperty("java.io.tmpdir"), resource.getFilename());
+                    IOUtils.copy(resource.getInputStream(), new FileOutputStream(tmp));
+                    FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+                    formDataMultiPart.bodyPart(new FileDataBodyPart("template", tmp));
+                    handler.postMultiPart(getRestUrl(NifiEndPoints.UPLOAD_TEMPLATE, rootGroup.getId()), formDataMultiPart, String.class);
+                    log.info(resource.getFilename() + " uploaded.");
+                    tmp.delete();
                 }
-                FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
-                formDataMultiPart.bodyPart(new FileDataBodyPart("template", resource.getFile()));
-                handler.postMultiPart(getRestUrl(NifiEndPoints.UPLOAD_TEMPLATE, rootGroup.getId()), formDataMultiPart, String.class);
-                log.info(resource.getFilename() + " uploaded.");
             }
         } catch (Exception ex)
         {

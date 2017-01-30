@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +36,7 @@ public class MongodbMigrator
     public void runMigrate() throws IOException
     {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        List<String> fileNames = FileUtils.readLines(resolver.getResource("db/updates.txt").getFile(), StandardCharsets.UTF_8);
+        List<String> fileNames = IOUtils.readLines(resolver.getResource("db/updates.txt").getInputStream(), StandardCharsets.UTF_8);
         String filePattern = "classpath:db/%s";
         List<Resource> resources = fileNames.stream()
                 .map(name -> name.trim())
