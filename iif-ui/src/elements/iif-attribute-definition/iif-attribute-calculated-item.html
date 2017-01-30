@@ -67,7 +67,10 @@
           multi
           selected-values="{{toCombine}}"
           attr-for-selected="value">
-          <template is="dom-repeat" items="{{fieldList}}" index-as="index">
+          <template is="dom-repeat"
+            items="{{fieldList}}"
+            index-as="index"
+            filter="_notCalcField">
             <paper-item value="{{item.originalAttribute}}">{{item.originalAttribute}}</paper-item>
           </template>
         </paper-listbox>
@@ -179,6 +182,10 @@
           changeClass = false;
         }
         this.$.attributesTrigger.toggleClass('good', changeClass);
+      },
+      //We want to filter out other calulated fields from this list and only allow regular fields
+      _notCalcField(item){
+        return !item.calculated;
       },
       _setAttributeType(event){
         let model = event.model.item;
