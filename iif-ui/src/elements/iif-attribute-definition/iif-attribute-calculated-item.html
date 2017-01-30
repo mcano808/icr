@@ -67,7 +67,10 @@
           multi
           selected-values="{{toCombine}}"
           attr-for-selected="value">
-          <template is="dom-repeat" items="{{fieldList}}" index-as="index">
+          <template is="dom-repeat"
+            items="{{fieldList}}"
+            index-as="index"
+            filter="_notCalcField">
             <paper-item value="{{item.originalAttribute}}">{{item.originalAttribute}}</paper-item>
           </template>
         </paper-listbox>
@@ -167,6 +170,10 @@
           notify: true
         }
       },
+      listeners:{
+        "mouseover":"_hovered",
+        "mouseout":"_unhovered"
+      },
       observers:[
         'validate(field.*)',
         '_fieldAttributesChanged(field.attributes.*)',
@@ -179,6 +186,18 @@
           changeClass = false;
         }
         this.$.attributesTrigger.toggleClass('good', changeClass);
+      },
+      _hovered(){
+        //Fire an event with a payload of toCombine
+        this.fire('calcfieldhover',{fields: this.toCombine});
+      },
+      _unhovered(){
+        //Fire event with payload of toCombine.
+        this.fire('calcfieldunhover',{fields: this.toCombine});
+      },
+      //We want to filter out other calulated fields from this list and only allow regular fields
+      _notCalcField(item){
+        return !item.calculated;
       },
       _setAttributeType(event){
         let model = event.model.item;
