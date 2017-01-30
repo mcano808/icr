@@ -3,7 +3,7 @@ services:
   nifi:
     build: ./nifi
     ports:
-      - "9090:80"
+      - "8080:80"
     environment:
       DISABLE_SSL: "true"
     volumes:

@@ -1,5 +1,7 @@
 package com.icr.common.ingest.datamodel;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,15 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JobProperty
 {
-    private String name;
-    private String description;
-    private boolean required;
-    private DataType type;
-    private String group;
-    private String subGroup;
-    private Object defaultValue;
-    private String reference;
-    
+    private final String name;
+    private final String description;
+    private final boolean required;
+    private final DataType type;
+    private final String group;
+    private final String subGroup;
+    private final Object defaultValue;
+    private final String reference;
+    private List<AllowableValue> allowableValues;
+
     @JsonCreator
     public JobProperty(@JsonProperty("name") String name, @JsonProperty("description") String description,
             @JsonProperty("required") boolean required, @JsonProperty("type") DataType type,
@@ -71,6 +74,16 @@ public class JobProperty
     public String getSubGroup()
     {
         return subGroup;
+    }
+
+    public List<AllowableValue> getAllowableValues()
+    {
+        return allowableValues;
+    }
+
+    public void setAllowableValues(List<AllowableValue> allowableValues)
+    {
+        this.allowableValues = allowableValues;
     }
 
 }

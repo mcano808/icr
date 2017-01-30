@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
@@ -47,7 +45,7 @@ public class MongodbMigrator
         List<String> executedScriptNames = getExecutedScriptsFromDatabase(mongoTemplate);
         Map<String, String> allScripts = readAllScripts(resources);
 
-        for (String scriptName : sortScriptNames(allScripts.keySet()))
+        for (String scriptName : allScripts.keySet())
         {
             if (!scriptInDatabase(executedScriptNames, scriptName))
             {
@@ -93,11 +91,6 @@ public class MongodbMigrator
     private String appendFunctionBody(String string)
     {
         return "function() {" + string + "}";
-    }
-
-    private TreeSet<String> sortScriptNames(Set<String> allScriptNames)
-    {
-        return new TreeSet<>(allScriptNames);
     }
 
     private boolean scriptInDatabase(List<String> executedScriptNames, String scriptName)
