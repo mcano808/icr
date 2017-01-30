@@ -1,5 +1,4 @@
 db.dataStoreJob.save([ {
-	"id" : null,
 	"name" : "ElasticSearch",
 	"description" : "Data store for elastic search",
 	"groupId" : null,

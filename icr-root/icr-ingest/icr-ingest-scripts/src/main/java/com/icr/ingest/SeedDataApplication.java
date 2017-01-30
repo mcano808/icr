@@ -18,10 +18,11 @@ public class SeedDataApplication
         IngestJobSeedData ingestJobSeedData = ctx.getBean(IngestJobSeedData.class);
         AttributeTypeSeedData attrTypeSeedData = ctx.getBean(AttributeTypeSeedData.class);
         
+        
         //Seed the ingest jobs        
         ingestJobSeedData.populateData();
         
         //Seed attribute types
-        attrTypeSeedData.populateData();
+        //attrTypeSeedData.populateData();
     }
 }

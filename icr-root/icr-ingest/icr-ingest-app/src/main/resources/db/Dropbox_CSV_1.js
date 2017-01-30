@@ -1,5 +1,4 @@
 db.ingestJob.save({
-	  "id" : null,
 	  "jobType" : "DROPBOX_CSV",
 	  "name" : "Dropbox CSV",
 	  "description" : "Read comma (or any delimited) files from a dropbox location.",
